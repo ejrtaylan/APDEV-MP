@@ -1,0 +1,7 @@
+.unity-image{
+	--unity-image-size: scale-to-fit;
+}
+
+#Banner{
+	--unity-image:url("/Assets/Sprites/DiceBannerTransparent.png");
+}
