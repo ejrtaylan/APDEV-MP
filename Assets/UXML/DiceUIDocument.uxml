@@ -1,0 +1,4 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/USS/DiceUSS.uss?fileID=7433441132597879392&amp;guid=a3946d2e0fb89b84bb3e3f0b171da616&amp;type=3#DiceUSS" />
+    <engine:Image name="Banner" style="position: absolute; top: 87px; left: 894px; height: 325px; width: 494px;" />
+</engine:UXML>
