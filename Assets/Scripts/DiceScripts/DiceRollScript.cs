@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-//using Utilities;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(DiceSides))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-//[RequireComponent(typeof(AudioSource))]
-public class testScript : MonoBehaviour
+public class DiceRollScript : MonoBehaviour
 {
     [SerializeField] float rollForce = 50f;
     [SerializeField] float torqueAmount = 5f;
-    //[SerializeField] float maxRollTime = 3f;
-    //[SerializeField] float minAngularVelocity = 0.1f;
     [SerializeField] float smoothTime = 0.1f;
     [SerializeField] float maxSpeed = 15f;
 
     [SerializeField] TMPro.TextMeshProUGUI resultText;
+    [SerializeField] TMPro.TextMeshProUGUI difficultyClassText;
 
     [SerializeField] AudioClip rollClip;
 
     int eventCount = 0;
 
     DiceSides diceSides;
-    //AudioSource audioSource;
+    AudioSource audioSource;
     Rigidbody rb;
 
     private float timer = 0;
@@ -34,14 +31,24 @@ public class testScript : MonoBehaviour
     Vector3 currentVelocity;
     bool finalize = false;
 
-    void Awake()
+    void OnEnable()
     {
-        diceSides = GetComponent<DiceSides>();
-        //audioSource = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
+        this.diceSides = GetComponent<DiceSides>();
+        this.rb = GetComponent<Rigidbody>();
 
-        resultText.text = "Shake to roll!";
-        originPosition = transform.position;
+        this.audioSource = GetComponent<AudioSource>();
+        this.audioSource.clip = rollClip;
+
+        this.resultText.text = "Shake to roll!";
+        this.difficultyClassText.text = "";
+        this.originPosition = transform.position;
+
+        EventBroadcaster.Instance.AddObserver(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, this.ChangeDifficultyClassText);
+    }
+
+    private void OnDisable()
+    {
+        EventBroadcaster.Instance.RemoveObserver(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE);
     }
 
     void Update()
@@ -52,9 +59,9 @@ public class testScript : MonoBehaviour
             this.StartCoroutine(this.TakeInput());
         }
         
-        if (finalize)
+        if (this.finalize)
         {
-            MoveDiceToCenter();
+            this.MoveDiceToCenter();
         }
     }
 
@@ -71,7 +78,7 @@ public class testScript : MonoBehaviour
             this.eventCount += Input.accelerationEventCount;
         }
 
-        Debug.Log(this.eventCount);
+        Debug.Log("EventNum: " + this.eventCount);
 
         //Check if phone was shaken
         if (this.eventCount > 0)
@@ -85,48 +92,55 @@ public class testScript : MonoBehaviour
 
     void PerformInitialRoll()
     {
-        ResetDiceState();
-        resultText.text = "";
+        this.ResetDiceState();
+        this.resultText.text = "";
 
         Vector3 targetPosition = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
         Vector3 direction = targetPosition - transform.position;
 
-        rb.AddForce(targetPosition * rollForce, ForceMode.Impulse);
-        rb.AddTorque(Random.insideUnitSphere * torqueAmount, ForceMode.Impulse);
+        this.rb.AddForce(targetPosition * rollForce, ForceMode.Impulse);
+        this.rb.AddTorque(Random.insideUnitSphere * torqueAmount, ForceMode.Impulse);
 
-        /*audioSource.clip = shakeClip;
-        audioSource.loop = true;
-        audioSource.Play();*/
+        this.audioSource.Play();
     }
 
     void MoveDiceToCenter()
     {
         transform.position = Vector3.SmoothDamp(transform.position, originPosition, ref currentVelocity, smoothTime, maxSpeed);
 
-        if ((originPosition - transform.position).sqrMagnitude <= 0.1f)
+        if ((this.originPosition - transform.position).sqrMagnitude <= 0.1f)
         {
-            FinalizeRoll();
+            this.FinalizeRoll();
         }
     }
 
     void FinalizeRoll()
     {
-        finalize = false;
-        ResetDiceState();
+        this.finalize = false;
+        this.ResetDiceState();
 
-        /*audioSource.loop = false;
-        audioSource.Stop();
-        audioSource.PlayOneShot(finalResultClip);*/
+        this.audioSource.Stop();
 
-        int result = diceSides.GetMatch();
+        int result = this.diceSides.GetMatch();
         Debug.Log($"Dice landed on {result}");
-        resultText.text = result.ToString();
+        this.resultText.text = result.ToString();
+
+        Parameters param = new Parameters();
+        param.PutExtra("ROLL_RESULT", result);
+        EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DICE_RESULT, param);
     }
 
     void ResetDiceState()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        transform.position = originPosition;
+        this.rb.velocity = Vector3.zero;
+        this.rb.angularVelocity = Vector3.zero;
+        transform.position = this.originPosition;
+    }
+
+    void ChangeDifficultyClassText(Parameters param)
+    {
+        int difficulty = param.GetIntExtra("DIFFICULTY_CLASS", 1);
+
+        this.difficultyClassText.text = difficulty.ToString();
     }
 }

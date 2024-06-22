@@ -8,7 +8,8 @@ using System.Collections;
 public class EventNames {
 	public class DiceEvents
 	{
-        public const string ON_UPDATE_SCORE = "ON_UPDATE_SCORE";
+        public const string ON_DIFFICULTY_CLASS_CHANGE = "ON_DIFFICULTY_CLASS_CHANGE";
+        public const string ON_DICE_RESULT = "ON_DICE_RESULT";
     }
 }
 
