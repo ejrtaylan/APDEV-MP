@@ -19,3 +19,5 @@ MonoBehaviour:
   Wisdom_Score: 8
   Intelligence_Score: 8
   Charisma_Score: 10
+  ability1: {fileID: 11400000, guid: 676a8f7a76e1c0e498f5332304f3f35a, type: 2}
+  ability2: {fileID: 11400000, guid: 8c89cd03d2f504c4189ab234deb3f94a, type: 2}

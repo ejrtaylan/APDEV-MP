@@ -12,6 +12,8 @@ public class ClassStats : ScriptableObject {
     [SerializeField] private int Wisdom_Score;
     [SerializeField] private int Intelligence_Score;
     [SerializeField] private int Charisma_Score;
+    [SerializeField] private ClassAbility ability1;
+    [SerializeField] private ClassAbility ability2;
 
     public string Name {
         get { return this.Class_Name;}
@@ -34,4 +36,11 @@ public class ClassStats : ScriptableObject {
     public int ChaMod {
         get {return (this.Charisma_Score - 10) / 2;}
     }    
+
+    public ClassAbility Ability1 {
+        get {return (this.ability1);}
+    }
+    public ClassAbility Ability2 {
+        get {return (this.ability2);}
+    }
 }

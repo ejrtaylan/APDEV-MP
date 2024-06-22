@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164db3d3338bb3a4e9e634be1db368f5, type: 3}
+  m_Name: AuraOfHealing
+  m_EditorClassIdentifier: 
+  Ability_Name: Aura of Healing
+  Ability_Description: An AOE Healing skill with base healing of 5 - 9 HP
+  effect_lower_bound: 5
+  effect_upper_bound: 9
+  minimum_range: 0
+  maximum_range: 3

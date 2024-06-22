@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b337e24d30b82418be9c244280fde3, type: 3}
+  m_Name: Smite
+  m_EditorClassIdentifier: 
+  Ability_Name: Smite
+  Ability_Description: A Melee Magic attack with base damage of 8 - 16 DMG
+  effect_lower_bound: 8
+  effect_upper_bound: 16
+  minimum_range: 1
+  maximum_range: 1
+  Attack_Type: Magic

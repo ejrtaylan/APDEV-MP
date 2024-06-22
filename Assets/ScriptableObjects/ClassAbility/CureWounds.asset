@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4ec72dea2e2bd48b30681e8052bb49, type: 3}
+  m_Name: CureWounds
+  m_EditorClassIdentifier: 
+  Ability_Name: Cure Wounds
+  Ability_Description: A Ranged Healing skill with base healing of 4 - 7 HP
+  effect_lower_bound: 4
+  effect_upper_bound: 7
+  minimum_range: 2
+  maximum_range: 4

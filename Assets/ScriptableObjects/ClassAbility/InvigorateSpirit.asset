@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4ec72dea2e2bd48b30681e8052bb49, type: 3}
+  m_Name: InvigorateSpirit
+  m_EditorClassIdentifier: 
+  Ability_Name: Invigorate Spirit
+  Ability_Description: "A Self-Target Healing skill with base healing of 5 \u2013
+    9 HP"
+  effect_lower_bound: 5
+  effect_upper_bound: 9
+  minimum_range: 0
+  maximum_range: 0
