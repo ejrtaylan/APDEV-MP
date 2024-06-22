@@ -21,6 +21,8 @@ public class DiceRollScript : MonoBehaviour
 
     int eventCount = 0;
 
+    int result = -1;
+
     DiceSides diceSides;
     AudioSource audioSource;
     Rigidbody rb;
@@ -35,6 +37,10 @@ public class DiceRollScript : MonoBehaviour
     {
         this.diceSides = GetComponent<DiceSides>();
         this.rb = GetComponent<Rigidbody>();
+
+        this.result = -1;
+        this.timer = 0;
+        this.eventCount = 0;
 
         this.audioSource = GetComponent<AudioSource>();
         this.audioSource.clip = rollClip;
@@ -116,17 +122,23 @@ public class DiceRollScript : MonoBehaviour
 
     void FinalizeRoll()
     {
+        this.audioSource.Stop();
         this.finalize = false;
         this.ResetDiceState();
 
         this.audioSource.Stop();
 
-        int result = this.diceSides.GetMatch();
+        this.result = this.diceSides.GetMatch();
         Debug.Log($"Dice landed on {result}");
         this.resultText.text = result.ToString();
 
+        Invoke("CallDiceRollEnd", 1.5f);
+
+    }
+
+    void CallDiceRollEnd(){
         Parameters param = new Parameters();
-        param.PutExtra("ROLL_RESULT", result);
+        param.PutExtra("ROLL_RESULT", this.result);
         EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DICE_RESULT, param);
     }
 
