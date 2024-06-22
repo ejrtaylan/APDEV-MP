@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SquareTemp.unity
     guid: 20da40eef93f79943a0244af61979b83
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: 2bac4daa4af86cd4b8049b8af828eda0, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 951db99ff3dd737419937c1b7df3d08c,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: 2a0bd856e17212844ab4f8df67df9e96, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: b0cfc0db25f7c444fbce93caa892c908, type: 2}
   m_UseUCBPForAssetBundles: 0
