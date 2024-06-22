@@ -8,6 +8,8 @@ public class JoystickHandler : MonoBehaviour, IDraggable, IResettable
 {
     [SerializeField]
     private GameObject Player;
+
+    private Rigidbody rb;
     Vector3 dir = Vector3.zero;
 
     [SerializeField]
@@ -16,7 +18,7 @@ public class JoystickHandler : MonoBehaviour, IDraggable, IResettable
     private Vector3 _originalPosition;
 
     [SerializeField]
-    private int _strength = 2;
+    private int _strength = 4500;
 
     public void OnDrag(DragEventArgs args)
     {
@@ -39,7 +41,14 @@ public class JoystickHandler : MonoBehaviour, IDraggable, IResettable
             worldPosition = this.math(worldPosition);
             this._targetPosition = worldPosition;
             this.transform.position = worldPosition;
-            Player.transform.position += dir * _strength * _speed * Time.deltaTime;
+
+            this.rb.velocity = this.joystickDirToPlayerMove(dir).normalized * _speed * _strength * Time.deltaTime;
+            // Player.transform.position = 
+            // Vector3.MoveTowards(
+            //     Player.transform.position,
+            //     Player.transform.position + this.joystickDirToPlayerMove(dir).normalized * _speed * Time.deltaTime,
+            //     _speed 
+            // );
         }
     }
 
@@ -59,15 +68,21 @@ public class JoystickHandler : MonoBehaviour, IDraggable, IResettable
         return targetPos;
     }
 
+    private Vector3 joystickDirToPlayerMove(Vector3 dir){
+        return new Vector3(-dir.y, 0, dir.x);
+    }
+
     private void Awake()
     {
         this._targetPosition = this.transform.position;
         this._originalPosition = this.transform.position;
+        this.rb = this.Player.GetComponent<Rigidbody>();
     }
 
     public void OnReset(DragEventArgs args)
     {
         this.transform.position = this._originalPosition;
         this._targetPosition = this._originalPosition;
+        this.rb.velocity = Vector3.zero;
     }
 }
