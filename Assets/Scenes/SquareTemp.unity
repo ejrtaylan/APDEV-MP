@@ -3324,8 +3324,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 46.79355, y: -46.05948}
-  m_SizeDelta: {x: 93.5892, y: 92.11893}
+  m_AnchoredPosition: {x: 47.43506, y: -27.454468}
+  m_SizeDelta: {x: 94.87231, y: 54.90887}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &906996658
 GameObject:
@@ -4227,6 +4227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 902410776}
+  DiceRoller: {fileID: 1791823284}
 --- !u!1 &1083655371
 GameObject:
   m_ObjectHideFlags: 0
@@ -6168,7 +6169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000021328, y: -21.7}
+  m_AnchoredPosition: {x: -0.0000021328, y: -15.3}
   m_SizeDelta: {x: 70.659, y: 12.688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1594455531
@@ -6214,7 +6215,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1594455532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1039282978}
+        m_TargetAssemblyTypeName: DevMenuScript, Assembly-CSharp
+        m_MethodName: OnAutoLoseRoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1594455532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6962,7 +6975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000021328, y: 2.1}
+  m_AnchoredPosition: {x: -0.0000021328, y: 0.0000033379}
   m_SizeDelta: {x: 70.659, y: 12.688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1686390953
@@ -7008,7 +7021,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1686390954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1039282978}
+        m_TargetAssemblyTypeName: DevMenuScript, Assembly-CSharp
+        m_MethodName: OnAutoWinRoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1686390954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7427,6 +7452,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778996920}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1791823284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6883433114258329895, guid: b4c076532a57ce54dbd6b82510f6b2fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 577964865}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1813555707
 GameObject:
   m_ObjectHideFlags: 0
