@@ -23,9 +23,7 @@ public class TapReceiver : MonoBehaviour
         if(args.HitObject == null)
         {
             Ray ray = Camera.main.ScreenPointToRay(args.Position);
-            Vector3 spawnPos = ray.GetPoint(5);
-
-            GameObject.Instantiate(this.template, spawnPos, Quaternion.identity);
+            
         }
     }
 }
