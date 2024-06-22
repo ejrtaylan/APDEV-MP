@@ -4,11 +4,17 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+using System.Runtime.CompilerServices;
+using System.Timers;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+
 public class GestureManager : MonoBehaviour
 {	
     public static GestureManager Instance;
 	private Touch _trackedFinger;
 	private float _gestureTime;
+    GameObject DragObject = null;
 
     private Vector2 _startPoint = Vector2.zero;
     private Vector2 _endpoint = Vector2.zero;
@@ -17,13 +23,32 @@ public class GestureManager : MonoBehaviour
     [SerializeField] private SwipeProperty _swipeProperty;
     public EventHandler<TapEventArgs> OnTap;
     public EventHandler<SwipeEventArgs> OnSwipe;
-	
-	private void Awake() 
+
+    [SerializeField]
+    private DragProperty _dragProperty;
+    public EventHandler<DragEventArgs> OnDrag;
+
+    private void Awake() 
     {
         if(Instance == null)
             Instance = this;
         else
             Destroy(this.gameObject);
+    }
+    private void Reset()
+    {
+        if (this.DragObject != null)
+        {
+            this.DragObject.transform.position = this.DragObject.transform.position + new Vector3(1000, 1000, 1000);
+            GameObject hitObject = GetHitObject(this._endpoint);
+            this.DragObject.transform.position = this.DragObject.transform.position - new Vector3(1000, 1000, 1000);
+            DragEventArgs args = new(this._trackedFinger, hitObject);
+
+            IResettable target = this.DragObject.GetComponent<IResettable>();
+            if (target != null)
+                target.OnReset(args);
+        }
+
     }
 
     private void CheckTap()
@@ -57,6 +82,17 @@ public class GestureManager : MonoBehaviour
     private GameObject GetHitObject(Vector2 screenPoint)
     {
         GameObject hitObject = null;
+
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = screenPoint;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        if (results.Count > 0)
+        {
+            return results[0].gameObject;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(screenPoint);
         RaycastHit hit;
 
@@ -121,6 +157,32 @@ public class GestureManager : MonoBehaviour
         return ESwipeDirection.UP;
     }
 
+
+    private void CheckDrag()
+    {
+        if (this._gestureTime >= this._dragProperty.Time)
+            this.FireDragEvent();
+    }
+
+    private void FireDragEvent()
+    {
+        Vector2 position = this._trackedFinger.position;
+        GameObject hitObject = this.GetHitObject(position);
+        if (hitObject != null && this.DragObject == null) this.DragObject = hitObject;
+        DragEventArgs args = new DragEventArgs(this._trackedFinger, this.DragObject);
+
+        if (this.OnDrag != null)
+            this.OnDrag(this, args);
+
+        if (this.DragObject != null)
+        {
+            IDraggable handler = this.DragObject.GetComponent<IDraggable>();
+            if (handler != null)
+                handler.OnDrag(args);
+        }
+
+    }
+
     private void Update() 
     {
         if(Input.touchCount > 0)
@@ -134,11 +196,14 @@ public class GestureManager : MonoBehaviour
                     break;
                 case TouchPhase.Ended: 
                     this._endpoint = this._trackedFinger.position;
+                    this.Reset();
+                    DragObject = null;
                     this.CheckTap();
                     this.CheckSwipe();
                     break;
                 default:
                     this._gestureTime += Time.deltaTime;
+                    this.CheckDrag();
                     break;
             }
         }
