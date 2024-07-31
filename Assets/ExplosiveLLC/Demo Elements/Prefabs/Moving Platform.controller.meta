@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2cce83b49c5102d4b85897721be44ad2
+timeCreated: 1534141199
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 42454
+  packageName: Warrior Pack Bundle 2 FREE
+  packageVersion: 1.2
+  assetPath: Assets/ExplosiveLLC/Demo Elements/Prefabs/Moving Platform.controller
+  uploadId: 430006

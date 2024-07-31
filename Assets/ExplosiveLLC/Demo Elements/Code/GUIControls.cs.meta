@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 052c25d6da23f2c4593819b4a319b099
+timeCreated: 1485512360
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 42454
+  packageName: Warrior Pack Bundle 2 FREE
+  packageVersion: 1.2
+  assetPath: Assets/ExplosiveLLC/Demo Elements/Code/GUIControls.cs
+  uploadId: 430006
