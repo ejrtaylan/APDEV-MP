@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Collider))]
 public class DiceRollScript : MonoBehaviour
 {
-    [SerializeField] float rollForce = 50f;
     [SerializeField] float torqueAmount = 5f;
     [SerializeField] float smoothTime = 0.1f;
     [SerializeField] float maxSpeed = 15f;
@@ -19,37 +18,63 @@ public class DiceRollScript : MonoBehaviour
 
     [SerializeField] AudioClip rollClip;
 
-    int eventCount = 0;
-
-    int result = -1;
-
     DiceSides diceSides;
     AudioSource audioSource;
-    Rigidbody rb;
+    Rigidbody rb; //rigidbody of dice
 
-    private float timer = 0;
+    int result; //dice result
+    int difficulty; //difficulty check
+    bool diceSuccess; //whether or not roll succeeded
+    bool shaken; //if phone was shaken
+    bool hasRolled; //kinda redundant but eh
 
-    Vector3 originPosition;
-    Vector3 currentVelocity;
-    bool finalize = false;
+    private float timer;
 
+    Vector3 originPosition; //Original position of the die
+    Vector3 currentVelocity; //Used in calculation
+
+    bool finalize;
+
+    //Following is used in detecting shakes
+    float accelerometerUpdateInterval = 1.0f / 60.0f;
+    float lowPassKernelWidthInSeconds = 1.0f;
+    float shakeDetectionThreshold = 1.0f;
+
+    float lowPassFilterFactor;
+    Vector3 lowPassValue;
+
+    
     void OnEnable()
     {
+        //Dice
         this.diceSides = GetComponent<DiceSides>();
         this.rb = GetComponent<Rigidbody>();
-
         this.result = -1;
-        this.timer = 0;
-        this.eventCount = 0;
 
+        //Audio
         this.audioSource = GetComponent<AudioSource>();
         this.audioSource.clip = rollClip;
 
+        //Text
         this.resultText.text = "Shake to roll!";
         this.difficultyClassText.text = "";
-        this.originPosition = transform.position;
 
+        //EventBroadcast
         EventBroadcaster.Instance.AddObserver(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, this.ChangeDifficultyClassText);
+
+        //Misc
+        this.timer = 0;
+        this.diceSuccess = false;
+        this.difficulty = 0;
+        this.originPosition = transform.position;
+        this.finalize = false;
+        this.shaken = false;
+        this.hasRolled = false;
+
+        //Shake detection
+        lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
+        shakeDetectionThreshold *= shakeDetectionThreshold;
+        lowPassValue = Input.acceleration;
     }
 
     private void OnDisable()
@@ -59,16 +84,20 @@ public class DiceRollScript : MonoBehaviour
 
     void Update()
     {
-        if (this.timer == 0)
+        if (this.timer == 0 && !this.hasRolled)
         {
             this.timer += 0.0001f;
             this.StartCoroutine(this.TakeInput());
         }
-        
+
         if (this.finalize)
         {
             this.MoveDiceToCenter();
         }
+        else if (!this.hasRolled)
+        {
+            this.timer = 0;
+        } 
     }
 
     private IEnumerator TakeInput()
@@ -81,19 +110,30 @@ public class DiceRollScript : MonoBehaviour
         {
             this.timer += Time.deltaTime;
 
-            this.eventCount += Input.accelerationEventCount;
+            Vector3 acceleration = Input.acceleration;
+            lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
+            Vector3 deltaAcceleration = acceleration - lowPassValue;
+
+            if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
+            {
+                this.shaken = true;
+            }
         }
 
-        Debug.Log("EventNum: " + this.eventCount);
-
         //Check if phone was shaken
-        if (this.eventCount > 0)
+        if (this.shaken)
+        {
+            this.shaken = false;
+            this.hasRolled = true;
             this.PerformInitialRoll();
 
-        //Let dice roll for 3 seconds
-        yield return new WaitForSeconds(4);
+            //Let dice roll for 5 seconds
+            yield return new WaitForSeconds(4);
 
-        this.finalize = true;
+            this.finalize = true;
+        }
+
+        
     }
 
     void PerformInitialRoll()
@@ -104,7 +144,7 @@ public class DiceRollScript : MonoBehaviour
         Vector3 targetPosition = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
         Vector3 direction = targetPosition - transform.position;
 
-        this.rb.AddForce(targetPosition * rollForce, ForceMode.Impulse);
+        this.rb.AddForce(targetPosition * 10.0f, ForceMode.Impulse);
         this.rb.AddTorque(Random.insideUnitSphere * torqueAmount, ForceMode.Impulse);
 
         this.audioSource.Play();
@@ -122,7 +162,7 @@ public class DiceRollScript : MonoBehaviour
 
     void FinalizeRoll()
     {
-        this.audioSource.Stop();
+        //this.audioSource.Stop();
         this.finalize = false;
         this.ResetDiceState();
 
@@ -138,7 +178,17 @@ public class DiceRollScript : MonoBehaviour
 
     void CallDiceRollEnd(){
         Parameters param = new Parameters();
-        param.PutExtra("ROLL_RESULT", this.result);
+
+        if(this.result < this.difficulty)
+        {
+            this.diceSuccess = false;
+        }
+        else if (this.result > this.difficulty)
+        {
+            this.diceSuccess = true;
+        }
+
+        param.PutExtra("ROLL_RESULT", this.diceSuccess);
         EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DICE_RESULT, param);
     }
 
@@ -151,7 +201,7 @@ public class DiceRollScript : MonoBehaviour
 
     void ChangeDifficultyClassText(Parameters param)
     {
-        int difficulty = param.GetIntExtra("DIFFICULTY_CLASS", 1);
+        this.difficulty = param.GetIntExtra("DIFFICULTY_CLASS", 1);
 
         this.difficultyClassText.text = difficulty.ToString();
     }

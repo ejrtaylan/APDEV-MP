@@ -20,7 +20,6 @@ public class DevMenuScript : MonoBehaviour
     public void OnToggleMenu(){
         this.menuShown = !this.menuShown;
         this.MenuPanel.SetActive(menuShown);
-
     }
 
     public void OnAutoWinRoll(){
@@ -51,6 +50,6 @@ public class DevMenuScript : MonoBehaviour
         this.waitingForRoll = false;
         this.DiceRoller.SetActive(false);
 
-        Debug.Log("Result: " + param.GetIntExtra("ROLL_RESULT", -1));
+        Debug.Log("Result: " + param.GetBoolExtra("ROLL_RESULT", false));
     }
 }
