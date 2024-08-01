@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "New Character", menuName = "Class Stats")]
 public class ClassStats : ScriptableObject {
     [SerializeField] private string Class_Name;

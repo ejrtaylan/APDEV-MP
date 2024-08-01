@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4ec72dea2e2bd48b30681e8052bb49, type: 3}
   m_Name: CureWounds
   m_EditorClassIdentifier: 
+  User: {fileID: 0}
+  Target: {fileID: 0}
+  Action_Type: 2
   Ability_Name: Cure Wounds
   Ability_Description: A Ranged Healing skill with base healing of 4 - 7 HP
   effect_lower_bound: 4

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b337e24d30b82418be9c244280fde3, type: 3}
   m_Name: Smite
   m_EditorClassIdentifier: 
+  User: {fileID: 0}
+  Target: {fileID: 0}
+  Action_Type: 1
   Ability_Name: Smite
   Ability_Description: A Melee Magic attack with base damage of 8 - 16 DMG
   effect_lower_bound: 8
@@ -19,3 +22,4 @@ MonoBehaviour:
   minimum_range: 1
   maximum_range: 1
   Attack_Type: Magic
+  Attack_Range: Melee
