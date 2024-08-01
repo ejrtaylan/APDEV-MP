@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 164db3d3338bb3a4e9e634be1db368f5, type: 3}
   m_Name: AuraOfHealing
   m_EditorClassIdentifier: 
+  User: {fileID: 0}
+  Target: {fileID: 0}
+  Action_Type: 3
   Ability_Name: Aura of Healing
   Ability_Description: An AOE Healing skill with base healing of 5 - 9 HP
   effect_lower_bound: 5

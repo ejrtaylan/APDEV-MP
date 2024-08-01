@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b337e24d30b82418be9c244280fde3, type: 3}
   m_Name: LongswordStrike
   m_EditorClassIdentifier: 
+  User: {fileID: 0}
+  Target: {fileID: 0}
+  Action_Type: 1
   Ability_Name: Longsword Strike
   Ability_Description: "A Melee Physical attack with base damage of 6 \u2013 10 DMG"
   effect_lower_bound: 6
@@ -19,3 +22,4 @@ MonoBehaviour:
   minimum_range: 1
   maximum_range: 1
   Attack_Type: Physical
+  Attack_Range: Melee
