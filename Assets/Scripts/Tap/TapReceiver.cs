@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TapReceiver : MonoBehaviour
 {
-    [SerializeField] private GameObject template;
+    [SerializeField] private GameObject Tapper;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +20,12 @@ public class TapReceiver : MonoBehaviour
 
     public void OnTap(object sender, TapEventArgs args)
     {
-        if(args.HitObject == null)
+        if(args != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(args.Position);
-            
+            if(args.HitObject == Tapper)
+            {
+                Debug.Log("Tap hit");
+            }
         }
     }
 }

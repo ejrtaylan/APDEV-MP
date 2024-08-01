@@ -39,7 +39,7 @@ public class DialogueHandler : MonoBehaviour, ITappable
 
         StartCoroutine(TypeLine());
     }
-
+    
     public void OnTap(TapEventArgs args)
     {
         if (isFirstLine)
@@ -88,7 +88,7 @@ public class DialogueHandler : MonoBehaviour, ITappable
             Debug.Log("Dialogue finished.");
             dialoguePanel.SetActive(false);
 
-            isFirstLine = true; // Reset for new dialogue session
+            isFirstLine = true; 
         }
     }
 }
