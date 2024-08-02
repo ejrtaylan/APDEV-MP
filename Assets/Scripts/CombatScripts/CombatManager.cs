@@ -29,6 +29,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Dictionary<ETeam, List<Combatant>> teamCombatants = new Dictionary<ETeam, List<Combatant>>();
     [SerializeField] private List<Combatant> combatantsByReverseInitiative;
     private int currentInitiativeIndex = -1;
+    public int TotalKilled = 0;
      
     private void sortInitiativeList(){
         combatantsByReverseInitiative.Sort();
