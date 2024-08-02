@@ -9,10 +9,10 @@ public class CharacterTapBridge : MonoBehaviour, ITappable
 
     private void Awake(){
         this.combatant = GetComponent<Combatant>();
+        this.dialogueTrigger = GetComponent<ChoiceDialogueTrigger>();
     }
     public void OnTap(TapEventArgs args){
-        if(CombatManager.Instance.CombatActive) combatant.OnTap(args);
-        else dialogueTrigger.OnTap(args);
-
+        if(CombatManager.Instance.CombatActive && combatant != null) combatant.OnTap(args);
+        else if (dialogueTrigger != null) dialogueTrigger.OnTap(args);
     }   
 }
