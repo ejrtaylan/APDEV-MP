@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Combatant : MonoBehaviour, ITappable, IComparable
+public class Combatant : MonoBehaviour, IComparable
 {
     [SerializeField] public ESubAreas CurrentArea;
     public ETeam CombatantTeam; 
