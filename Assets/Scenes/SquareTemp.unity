@@ -510,6 +510,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114290838}
   m_CullTransparentMesh: 1
+--- !u!1 &125953564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 125953565}
+  - component: {fileID: 125953567}
+  - component: {fileID: 125953566}
+  m_Layer: 0
+  m_Name: TriggerPhase1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &125953565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125953564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 11.386, y: 11.386, z: 11.386}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2032753794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125953566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125953564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760a91f9802c19e42b5dd2ae6da19e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualCue: {fileID: 613029725}
+  inkJSON: {fileID: 4900000, guid: 5752a7148118c6a4ba70b98135159aa1, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
+--- !u!65 &125953567
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125953564}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &209443012
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,6 +667,7 @@ Transform:
   m_Children:
   - {fileID: 541207802}
   - {fileID: 1422137162}
+  - {fileID: 1460804425}
   - {fileID: 815911298}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1884,6 +1955,8 @@ GameObject:
   - component: {fileID: 433198383}
   - component: {fileID: 433198385}
   - component: {fileID: 433198384}
+  - component: {fileID: 433198386}
+  - component: {fileID: 433198387}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -1920,6 +1993,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1830214070}
   inkJSON: {fileID: 4900000, guid: cd889cf2dace95647b1ae50097207f71, type: 3}
+  targetStorySection: 1
+  targetChoiceIndex: 0
 --- !u!65 &433198385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1941,6 +2016,44 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &433198386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433198382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31587bc1b3d42fd479029acd76c728c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choiceDialogueTrigger: {fileID: 433198384}
+  objectsToEnable:
+  - {fileID: 1921273555}
+  - {fileID: 1367197246}
+  - {fileID: 815911297}
+  objectsToDestroy:
+  - {fileID: 125953564}
+  - {fileID: 1833334611}
+  - {fileID: 1460804424}
+--- !u!114 &433198387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433198382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 1
+  targetChoiceIndex: 0
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 5
+  DialoguePanel: {fileID: 807349223}
 --- !u!1 &438267887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4031,7 +4144,7 @@ GameObject:
   - component: {fileID: 815911300}
   - component: {fileID: 815911299}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: TriggerPhase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4066,6 +4179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1422137161}
   inkJSON: {fileID: 4900000, guid: 7395d6a776eb02041aed9970f213bbd7, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
 --- !u!65 &815911300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5022,7 +5137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1039282974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,7 +5854,7 @@ GameObject:
   - component: {fileID: 1367197249}
   - component: {fileID: 1367197248}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: TriggerPhase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5774,6 +5889,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 613029725}
   inkJSON: {fileID: 4900000, guid: a53ebbea27ebab24d97e56634bba332b, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
 --- !u!65 &1367197249
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6937,6 +7054,76 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1455959206}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1460804424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1460804425}
+  - component: {fileID: 1460804427}
+  - component: {fileID: 1460804426}
+  m_Layer: 0
+  m_Name: TriggerPhase1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1460804425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460804424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 11.386, y: 11.386, z: 11.386}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 209443016}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1460804426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460804424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760a91f9802c19e42b5dd2ae6da19e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualCue: {fileID: 1422137161}
+  inkJSON: {fileID: 4900000, guid: 09a7de7ff048d29479b3e62b58e3d263, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
+--- !u!65 &1460804427
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460804424}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1476269945
 GameObject:
   m_ObjectHideFlags: 0
@@ -9918,6 +10105,76 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 629227727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1833334611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1833334612}
+  - component: {fileID: 1833334614}
+  - component: {fileID: 1833334613}
+  m_Layer: 0
+  m_Name: TriggerPhase1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1833334612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833334611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 11.386, y: 11.386, z: 11.386}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1915579857}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1833334613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833334611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760a91f9802c19e42b5dd2ae6da19e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualCue: {fileID: 109998485}
+  inkJSON: {fileID: 4900000, guid: 3d195c0d33175fa44b94ac519c3e49e2, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
+--- !u!65 &1833334614
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833334611}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1903579523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10180,6 +10437,7 @@ Transform:
   m_Children:
   - {fileID: 1626539689}
   - {fileID: 109998486}
+  - {fileID: 1833334612}
   - {fileID: 1921273556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10212,7 +10470,7 @@ GameObject:
   - component: {fileID: 1921273558}
   - component: {fileID: 1921273557}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: TriggerPhase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10247,6 +10505,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 109998485}
   inkJSON: {fileID: 4900000, guid: 24a9b09b6930bc1468f92f329b7c351a, type: 3}
+  targetStorySection: 0
+  targetChoiceIndex: 0
 --- !u!65 &1921273558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10810,6 +11070,7 @@ Transform:
   m_Children:
   - {fileID: 1509788962}
   - {fileID: 613029726}
+  - {fileID: 125953565}
   - {fileID: 1367197247}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
