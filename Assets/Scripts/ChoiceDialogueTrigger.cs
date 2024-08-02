@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
 {
-    [Header("VisualCue")]
+    [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
+
+
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
+
+
 
     private bool playerInRange;
     private bool isTapped;
     private bool hasBeenTapped;
 
+
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
-        hasBeenTapped = false; 
+        hasBeenTapped = false;
     }
 
     private void Update()
@@ -28,9 +33,10 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
             visualCue.SetActive(true);
             if (isTapped)
             {
-                ChoiceDialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                ChoiceDialogueManager dialogueManager = ChoiceDialogueManager.GetInstance();
+                dialogueManager.EnterDialogueMode(inkJSON);
                 isTapped = false;
-                hasBeenTapped = true; 
+                hasBeenTapped = true;
             }
         }
         else
@@ -61,9 +67,18 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
         }
     }
 
-
     public bool HasBeenTapped()
     {
         return hasBeenTapped;
+    }
+
+    public void CheckForKeywords(int storySectionCounter, int choiceIndex)
+    {
+        if (storySectionCounter == targetStorySection && choiceIndex == targetChoiceIndex)
+        {
+            Debug.Log("Target section and choice index met: Story Section: " + storySectionCounter + ", Choice Index: " + choiceIndex + ". Initiating dice roll...");
+
+
+        }
     }
 }

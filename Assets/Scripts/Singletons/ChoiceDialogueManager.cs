@@ -23,7 +23,12 @@ public class ChoiceDialogueManager : MonoBehaviour
     private Story currentStory;
     private bool dialogueIsPlaying;
 
+    private string currentStoryText;
+    private List<string> currentChoicesText;
+    private int storySectionCounter; // Add a counter to track story section
+
     private static ChoiceDialogueManager instance;
+
     private void Awake()
     {
         if (instance != null)
@@ -37,7 +42,7 @@ public class ChoiceDialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
-        endButton.gameObject.SetActive(false); // Hide the end button initially
+        endButton.gameObject.SetActive(false);
 
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -47,7 +52,7 @@ public class ChoiceDialogueManager : MonoBehaviour
             index++;
         }
 
-        endButton.onClick.AddListener(ExitDialogueMode); // Add listener to end button
+        endButton.onClick.AddListener(ExitDialogueMode);
     }
 
     private void Update()
@@ -69,31 +74,33 @@ public class ChoiceDialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         joystickPanel.SetActive(false);
-        endButton.gameObject.SetActive(false); // Hide the end button when entering dialogue mode
+        endButton.gameObject.SetActive(false);
+        storySectionCounter = 0; // Reset the counter
         Debug.Log("Enter Dialogue Mode");
 
         ContinueStory();
     }
 
-    private void ExitDialogueMode()
+    public void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
         joystickPanel.SetActive(true);
-        endButton.gameObject.SetActive(false); // Hide the end button when exiting dialogue mode
+        endButton.gameObject.SetActive(false);
     }
 
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
+            currentStoryText = currentStory.Continue();
+            dialogueText.text = currentStoryText;
             DisplayChoices();
+            storySectionCounter++; // Increment the counter
         }
         else if (currentStory.currentChoices.Count == 0)
         {
-            // If there are no choices, show the end button
             endButton.gameObject.SetActive(true);
         }
         else
@@ -105,6 +112,7 @@ public class ChoiceDialogueManager : MonoBehaviour
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
+        currentChoicesText = new List<string>();
 
         if (currentChoices.Count > choices.Length)
         {
@@ -116,7 +124,8 @@ public class ChoiceDialogueManager : MonoBehaviour
         {
             choices[index].gameObject.SetActive(true);
             choicesText[index].text = choice.text;
-            int choiceIndex = index; // Capture the current index in the loop
+            currentChoicesText.Add(choice.text);
+            int choiceIndex = index;
             choices[index].GetComponent<Button>().onClick.RemoveAllListeners();
             choices[index].GetComponent<Button>().onClick.AddListener(() => OnChoiceButtonClicked(choiceIndex));
             index++;
@@ -130,13 +139,31 @@ public class ChoiceDialogueManager : MonoBehaviour
             }
         }
 
-
         endButton.gameObject.SetActive(currentChoices.Count == 0);
     }
 
     private void OnChoiceButtonClicked(int choiceIndex)
     {
+        TrackStoryAndChoices(choiceIndex);
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
     }
+
+    private void TrackStoryAndChoices(int choiceIndex)
+    {
+        // Log or store the current part of the story, choices, and the selected choice
+        Debug.Log("Current Story Text: " + currentStoryText);
+        Debug.Log("Current Choices: " + string.Join(", ", currentChoicesText));
+        Debug.Log("Selected Choice: " + currentChoicesText[choiceIndex]);
+
+        // Find the ChoiceDialogueTrigger component on the current game object or another relevant object
+        DialogueTrigger dialogueTrigger = FindAnyObjectByType<DialogueTrigger>();
+        if (dialogueTrigger != null)
+        {
+            dialogueTrigger.CheckForKeywords(storySectionCounter, choiceIndex);
+            Debug.Log("Checking...");
+        }
+    }
 }
+
+
