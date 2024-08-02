@@ -417,4 +417,8 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
+
+    public GameObject GetActivePlayer(){
+        return PlayerParty[0];
+    }
 }
