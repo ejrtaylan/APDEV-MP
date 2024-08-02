@@ -14,9 +14,11 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Difficulty Class")]
     [SerializeField] private int difficultyClass;
 
-
-    [Header("DialoguePanel")]
+    [Header("Dialogue Panel")]
     [SerializeField] private GameObject DialoguePanel;
+
+    [Header("Keywords")]
+    [SerializeField] private string[] keywords; 
 
     private bool waitingForRoll = false;
 
@@ -26,20 +28,34 @@ public class DialogueTrigger : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.DiceEvents.ON_DICE_RESULT, this.AwaitRoll);
     }
 
-
-    public void CheckForKeywords(int storySectionCounter, int choiceIndex)
+    public void CheckForKeywords(string selectedChoiceText, int storySectionCounter, int choiceIndex)
     {
+        // Check if the story section and choice index match the target
         if (storySectionCounter == targetStorySection && choiceIndex == targetChoiceIndex)
         {
-            Debug.Log("Target section and choice index met: Story Section: " + storySectionCounter + ", Choice Index: " + choiceIndex + ". Initiating dice roll...");
+            // Check if the selected choice text contains any of the keywords
+            foreach (string keyword in keywords)
+            {
+                if (selectedChoiceText.Contains(keyword))
+                {
+                    Debug.Log("Keyword detected: " + keyword + " in Story Section: " + storySectionCounter + ", Choice Index: " + choiceIndex + ". Initiating dice roll...");
 
-            this.DiceRoller.SetActive(true);
-            this.waitingForRoll = true;
+                    ChoiceDialogueManager dialogueManager = ChoiceDialogueManager.GetInstance();
+                    if (dialogueManager != null)
+                    {
+                        dialogueManager.ExitDialogueMode();
+                    }
 
-            Parameters param = new Parameters();
-            param.PutExtra("DIFFICULTY_CLASS", difficultyClass);
-            EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
+                    this.DiceRoller.SetActive(true);
+                    this.waitingForRoll = true;
 
+                    Parameters param = new Parameters();
+                    param.PutExtra("DIFFICULTY_CLASS", difficultyClass);
+                    EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
+
+                    return; 
+                }
+            }
         }
     }
 
@@ -52,7 +68,6 @@ public class DialogueTrigger : MonoBehaviour
 
         Debug.Log("Result: " + param.GetBoolExtra("ROLL_RESULT", false));
 
-        ChoiceDialogueManager dialogueManager = ChoiceDialogueManager.GetInstance();
-        dialogueManager.ExitDialogueMode();
+
     }
 }

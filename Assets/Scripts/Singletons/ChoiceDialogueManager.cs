@@ -156,11 +156,12 @@ public class ChoiceDialogueManager : MonoBehaviour
         Debug.Log("Current Choices: " + string.Join(", ", currentChoicesText));
         Debug.Log("Selected Choice: " + currentChoicesText[choiceIndex]);
 
-        // Find the ChoiceDialogueTrigger component on the current game object or another relevant object
+        // Find the DialogueTrigger component
         DialogueTrigger dialogueTrigger = FindAnyObjectByType<DialogueTrigger>();
         if (dialogueTrigger != null)
         {
-            dialogueTrigger.CheckForKeywords(storySectionCounter, choiceIndex);
+            // Pass the selected choice text to the CheckForKeywords method
+            dialogueTrigger.CheckForKeywords(currentChoicesText[choiceIndex], storySectionCounter, choiceIndex);
             Debug.Log("Checking...");
         }
     }
