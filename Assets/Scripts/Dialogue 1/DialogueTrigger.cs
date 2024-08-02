@@ -108,5 +108,15 @@ public class DialogueTrigger : MonoBehaviour
                 dialogueManager.EnterDialogueMode(chosenJSON);
             }
         }
+
+        // If the result is a success, recruit the character if they have a Recruitable component
+        if (rollResult)
+        {
+            Recruitable recruitable = GetComponent<Recruitable>();
+            if (recruitable != null)
+            {
+                recruitable.RecruitCharacter();
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
+public class ChoiceDialogueTrigger : MonoBehaviour
 {
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
