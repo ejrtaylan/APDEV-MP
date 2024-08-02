@@ -1800,10 +1800,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 1
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: f880b24d642d9164bb46b12b6ecc8364, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1001 &214395146
@@ -8831,12 +8832,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0c77fcd09230640a98a433dbc00e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeedMod: 0.5
+  tileEstimateDist: 10
+  PlayerParty:
+  - {fileID: 652812868967016615}
+  - {fileID: 209443012}
   movementAbilityRef: {fileID: 11400000, guid: 1b212aec402cc0a4184de5384aa2285c, type: 2}
   playerTurnBanner: {fileID: 666060079}
   enemyTurnBanner: {fileID: 2056420293}
   playerActionSelectBanner: {fileID: 586108308}
   debugStartCombat: 0
   combatantsByReverseInitiative: []
+  TotalKilled: 0
 --- !u!1 &968211395
 GameObject:
   m_ObjectHideFlags: 0
@@ -9876,6 +9883,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 807349223}
   dialogueText: {fileID: 1814857794}
   endButton: {fileID: 2084472347}
+  CombatButton: {fileID: 0}
   joystickPanel: {fileID: 555798687}
   choices:
   - {fileID: 1448029757}
@@ -16480,10 +16488,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 0
   CombatantTeam: 0
   CombatantClass: {fileID: 11400000, guid: 4461b9a3e654a25468b1fe88aff7610e, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1 &1778996920
@@ -17291,10 +17300,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 1
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: 4461b9a3e654a25468b1fe88aff7610e, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1 &1921273555
@@ -18652,10 +18662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 0
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: c4c7837c313dfdf4dba475fd63ee57f2, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1001 &2040654162
@@ -20138,10 +20149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 1
   CombatantTeam: 0
   CombatantClass: {fileID: 11400000, guid: 7f56e22a36338fa4f99878c31e1f5c4f, type: 2}
   maxHealth: 0
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!65 &7662884429025076777
