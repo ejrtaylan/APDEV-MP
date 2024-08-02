@@ -242,11 +242,19 @@ public class CombatManager : MonoBehaviour
         AwaitingMoveTarget = false; 
         playerActionSelectBanner.SetActive(false);
 
+        Animator animator = processingAction.User.gameObject.GetComponent<Animator>();
+        if(animator != null){
+            animator.SetBool("IsMoving", true);
+            animator.SetTrigger("Move");
+        }
+
         while(processingAction.User.transform.position != tile.transform.position){
             processingAction.User.transform.position = Vector3.MoveTowards(processingAction.User.transform.position, tile.transform.position, moveSpeedMod * (processingAction.User.CombatantClass.DexMod + 6));
             Debug.Log($"{processingAction.User}: {processingAction.User.transform.position}");
             yield return null;
         }
+
+        if(animator != null) animator.SetBool("IsMoving", false);
 
         EndTurn();
     }
