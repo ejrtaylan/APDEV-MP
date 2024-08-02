@@ -82,7 +82,7 @@ Transform:
   m_GameObject: {fileID: 2829054134440465047}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.761331, y: 1.25, z: 7.6422668}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 5, y: 3, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,15 +192,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.7160077
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.9268003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 7c72ed3f90575084c9f3b5b585887182, type: 3}
       propertyPath: m_LocalRotation.w
@@ -321,6 +321,6 @@ MonoBehaviour:
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: c4c7837c313dfdf4dba475fd63ee57f2, type: 2}
   maxHealth: 0
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}

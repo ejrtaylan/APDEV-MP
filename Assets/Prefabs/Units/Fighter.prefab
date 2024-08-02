@@ -187,15 +187,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15
-      objectReference: {fileID: 0}
-    - target: {fileID: 400102, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
-      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400102, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400102, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -311,7 +311,7 @@ MonoBehaviour:
   CombatantTeam: 0
   CombatantClass: {fileID: 11400000, guid: 7f56e22a36338fa4f99878c31e1f5c4f, type: 2}
   maxHealth: 0
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!4 &1192924533641645042 stripped
