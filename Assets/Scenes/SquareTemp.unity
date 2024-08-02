@@ -6035,7 +6035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetStorySection: 2
+  targetStorySection: 1
   targetChoiceIndex: 1
   DiceRoller: {fileID: 1791823284}
   difficultyClass: 10
@@ -6056,7 +6056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetStorySection: 2
+  targetStorySection: 1
   targetChoiceIndex: 0
   DiceRoller: {fileID: 1791823284}
   difficultyClass: 10

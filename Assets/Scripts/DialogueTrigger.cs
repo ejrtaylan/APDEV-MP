@@ -34,12 +34,24 @@ public class DialogueTrigger : MonoBehaviour
 
     public void CheckForKeywords(string selectedChoiceText, int storySectionCounter, int choiceIndex)
     {
+        Debug.Log("CheckForKeywords called with:");
+        Debug.Log("Selected Choice Text: " + selectedChoiceText);
+        Debug.Log("Story Section Counter: " + storySectionCounter);
+        Debug.Log("Choice Index: " + choiceIndex);
+        Debug.Log("Target Story Section: " + targetStorySection);
+        Debug.Log("Target Choice Index: " + targetChoiceIndex);
+
+        Debug.Log("Keywords List: " + string.Join(", ", keywords));
+
         // Check if the story section and choice index match the target
         if (storySectionCounter == targetStorySection && choiceIndex == targetChoiceIndex)
         {
+            Debug.Log("Story section and choice index match the target.");
+
             // Check if the selected choice text contains any of the keywords
             foreach (string keyword in keywords)
             {
+                Debug.Log("Checking for keyword: " + keyword);
                 if (selectedChoiceText.Contains(keyword))
                 {
                     Debug.Log("Keyword detected: " + keyword + " in Story Section: " + storySectionCounter + ", Choice Index: " + choiceIndex + ". Initiating dice roll...");
@@ -59,9 +71,19 @@ public class DialogueTrigger : MonoBehaviour
 
                     return;
                 }
+                else
+                {
+                    Debug.Log("Keyword not found: " + keyword);
+                }
             }
+            Debug.Log("No keywords matched.");
+        }
+        else
+        {
+            Debug.Log("Story section and choice index do not match the target.");
         }
     }
+
 
     public void AwaitRoll(Parameters param)
     {
