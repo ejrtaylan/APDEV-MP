@@ -10,18 +10,37 @@ public class ChoiceDialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
-
+    [Header("Collider GameObject")]
+    [SerializeField] private Collider colliderGameObject; 
 
     private bool playerInRange;
     private bool isTapped;
     private bool hasBeenTapped;
-
 
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
         hasBeenTapped = false;
+
+        if (colliderGameObject == null)
+        {
+            Debug.LogError("Collider GameObject is not assigned!");
+        }
+        else
+        {
+
+            colliderGameObject.isTrigger = true;
+        }
+    }
+
+    private void Start()
+    {
+
+        if (colliderGameObject != null)
+        {
+            colliderGameObject.isTrigger = true;
+        }
     }
 
     private void Update()
@@ -45,9 +64,19 @@ public class ChoiceDialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            Debug.Log("Player entered range.");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            Debug.Log("Player exited range.");
         }
     }
 
@@ -55,14 +84,6 @@ public class ChoiceDialogueTrigger : MonoBehaviour
     {
         isTapped = true;
         Debug.Log("Tapped on: " + args.HitObject.name);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            playerInRange = false;
-        }
     }
 
     public bool HasBeenTapped()

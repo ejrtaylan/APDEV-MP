@@ -5,10 +5,10 @@ using UnityEngine;
 public class DevMenuScript : MonoBehaviour
 {
     [SerializeField] private GameObject MenuPanel;
-    [SerializeField] private GameObject DiceRoller;
 
     private bool menuShown = false;
     private bool waitingForRoll = false;
+    bool toggle = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,33 +22,56 @@ public class DevMenuScript : MonoBehaviour
         this.MenuPanel.SetActive(menuShown);
     }
 
+    public void WinToggle()
+    {
+        if (toggle)
+        {
+            this.OnAutoWinRoll();
+        }
+        else if (!toggle)
+        {
+            toggle = !toggle;
+            this.WinToggle();
+        }
+    }
+
+    public void LoseToggle()
+    {
+        if (toggle)
+        {
+            toggle = !toggle;
+            this.LoseToggle();
+        }
+        else if(!toggle)
+        {
+            this.OnAutoLoseRoll();
+        }
+    }
+
     public void OnAutoWinRoll(){
         Debug.Log("Win it!");
 
-        this.DiceRoller.SetActive(true);
         this.waitingForRoll = true;
 
         Parameters param = new Parameters();
-        param.PutExtra("DIFFICULTY_CLASS", 0);
-        EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
+        param.PutExtra("MODIFIER", 20);
+        EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ADD_MODIFIER, param);
     }
 
     public void OnAutoLoseRoll(){
         Debug.Log("Lose it!");
 
-        this.DiceRoller.SetActive(true);
         this.waitingForRoll = true;
 
         Parameters param = new Parameters();
-        param.PutExtra("DIFFICULTY_CLASS", 30);
-        EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
+        param.PutExtra("MODIFIER", -20);
+        EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ADD_MODIFIER, param);
     }
 
     public void AwaitRoll(Parameters param){
         if(!this.waitingForRoll) return;
 
         this.waitingForRoll = false;
-        this.DiceRoller.SetActive(false);
 
         Debug.Log("Result: " + param.GetBoolExtra("ROLL_RESULT", false));
     }
