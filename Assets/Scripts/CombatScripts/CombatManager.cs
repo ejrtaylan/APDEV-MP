@@ -139,6 +139,10 @@ public class CombatManager : MonoBehaviour
         slot2.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability1;
         slot3.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability2;
 
+        slot1.GetComponent<Image>().sprite = this.movementAbilityRef.Ability_Icon;
+        slot2.GetComponent<Image>().sprite = getCurrentCombatant().CombatantClass.Ability1.Ability_Icon;
+        slot3.GetComponent<Image>().sprite = getCurrentCombatant().CombatantClass.Ability2.Ability_Icon;
+
         playerActionSelectBanner.SetActive(true);
         Debug.Log("Player's Turn!");
 
