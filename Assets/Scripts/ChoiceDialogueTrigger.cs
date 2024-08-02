@@ -74,11 +74,11 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
 
     public void CheckForKeywords(int storySectionCounter, int choiceIndex)
     {
-        if (storySectionCounter == targetStorySection && choiceIndex == targetChoiceIndex)
+        /*if (storySectionCounter == targetStorySection && choiceIndex == targetChoiceIndex)
         {
             Debug.Log("Target section and choice index met: Story Section: " + storySectionCounter + ", Choice Index: " + choiceIndex + ". Initiating dice roll...");
 
 
-        }
+        }*/
     }
 }
