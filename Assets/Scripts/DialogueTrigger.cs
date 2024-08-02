@@ -17,12 +17,12 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Dialogue Panel")]
     [SerializeField] private GameObject DialoguePanel;
 
-    [Header("Keywords")]
-    [SerializeField] private string[] keywords;
-
     [Header("Success and Failure JSON")]
     [SerializeField] private TextAsset successJSON;
     [SerializeField] private TextAsset failJSON;
+
+    [Header("Keywords")]
+    [SerializeField] private string[] keywords;
 
     private bool waitingForRoll = false;
 
@@ -57,7 +57,7 @@ public class DialogueTrigger : MonoBehaviour
                     param.PutExtra("DIFFICULTY_CLASS", difficultyClass);
                     EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
 
-                    return; 
+                    return;
                 }
             }
         }

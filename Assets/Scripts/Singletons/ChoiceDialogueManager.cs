@@ -61,6 +61,9 @@ public class ChoiceDialogueManager : MonoBehaviour
         {
             return;
         }
+        Debug.Log("Story count: " + storySectionCounter);
+        Debug.Log("Dialogue playing? : " + dialogueIsPlaying);
+
     }
 
     public static ChoiceDialogueManager GetInstance()
@@ -154,7 +157,8 @@ public class ChoiceDialogueManager : MonoBehaviour
         // Log or store the current part of the story, choices, and the selected choice
         Debug.Log("Current Story Text: " + currentStoryText);
         Debug.Log("Current Choices: " + string.Join(", ", currentChoicesText));
-        Debug.Log("Selected Choice: " + currentChoicesText[choiceIndex]);
+        Debug.Log("Selected Choice: " + currentChoicesText[choiceIndex] + choiceIndex);
+
 
         // Find the DialogueTrigger component
         DialogueTrigger dialogueTrigger = FindAnyObjectByType<DialogueTrigger>();

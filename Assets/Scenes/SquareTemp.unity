@@ -3105,10 +3105,10 @@ MonoBehaviour:
   DiceRoller: {fileID: 1791823284}
   difficultyClass: 5
   DialoguePanel: {fileID: 807349223}
-  keywords:
-  - come with me.
   successJSON: {fileID: 4900000, guid: 51a2ff2205bce584d95631b44990d443, type: 3}
   failJSON: {fileID: 4900000, guid: 09444352c7eb295459aa0f89680f487a, type: 3}
+  keywords:
+  - come with me.
 --- !u!1 &577185339
 GameObject:
   m_ObjectHideFlags: 0
@@ -4212,6 +4212,8 @@ GameObject:
   - component: {fileID: 815911298}
   - component: {fileID: 815911300}
   - component: {fileID: 815911299}
+  - component: {fileID: 815911302}
+  - component: {fileID: 815911301}
   m_Layer: 0
   m_Name: TriggerPhase2
   m_TagString: Untagged
@@ -4269,6 +4271,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &815911301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815911297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 1
+  targetChoiceIndex: 1
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 15
+  DialoguePanel: {fileID: 807349223}
+  successJSON: {fileID: 4900000, guid: 5ae35eee1a4ba85499b86f7c0ac3219d, type: 3}
+  failJSON: {fileID: 4900000, guid: c9e3968e785c46b4a8e967dda077cab1, type: 3}
+  keywords:
+  - Have you seen anything suspicious at night?
+--- !u!114 &815911302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815911297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 1
+  targetChoiceIndex: 0
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 15
+  DialoguePanel: {fileID: 807349223}
+  successJSON: {fileID: 4900000, guid: 5ae35eee1a4ba85499b86f7c0ac3219d, type: 3}
+  failJSON: {fileID: 4900000, guid: c9e3968e785c46b4a8e967dda077cab1, type: 3}
+  keywords:
+  - See Loftwin recently?
 --- !u!1 &876446822 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2169457783274408492, guid: 90f3c285e71b98946868647e31840ec8,
@@ -5920,6 +5964,8 @@ GameObject:
   - component: {fileID: 1367197247}
   - component: {fileID: 1367197249}
   - component: {fileID: 1367197248}
+  - component: {fileID: 1367197251}
+  - component: {fileID: 1367197250}
   m_Layer: 0
   m_Name: ShopTriggerPhase2
   m_TagString: Untagged
@@ -5977,6 +6023,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1367197250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367197246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 2
+  targetChoiceIndex: 1
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 10
+  DialoguePanel: {fileID: 807349223}
+  successJSON: {fileID: 4900000, guid: d4d4e3de97c659a408ab3050428c1c45, type: 3}
+  failJSON: {fileID: 4900000, guid: 44e2e25a8976b6a499d3805f92a47d28, type: 3}
+  keywords:
+  - anything happen lately?
+--- !u!114 &1367197251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367197246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 2
+  targetChoiceIndex: 0
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 10
+  DialoguePanel: {fileID: 807349223}
+  successJSON: {fileID: 4900000, guid: d4d4e3de97c659a408ab3050428c1c45, type: 3}
+  failJSON: {fileID: 4900000, guid: 44e2e25a8976b6a499d3805f92a47d28, type: 3}
+  keywords:
+  - Loftwin Pearlblood.
 --- !u!1 &1374150025
 GameObject:
   m_ObjectHideFlags: 0
@@ -12091,7 +12179,7 @@ Transform:
   m_GameObject: {fileID: 652812868967016615}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45, y: 5, z: -5}
+  m_LocalPosition: {x: 6.6, y: 5, z: 13.6}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children:
