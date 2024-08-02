@@ -9,7 +9,9 @@ public class EventNames {
 	public class DiceEvents
 	{
         public const string ON_DIFFICULTY_CLASS_CHANGE = "ON_DIFFICULTY_CLASS_CHANGE";
+        public const string ON_DICE_DONE = "ON_DICE_DONE";
         public const string ON_DICE_RESULT = "ON_DICE_RESULT";
+        public const string DICE_ADS = "DICE_ADS";
         public const string ADD_MODIFIER = "ADD_MODIFIER";
     }
 
@@ -29,11 +31,5 @@ public class EventNames {
         public const string ON_SQ1_COMPLETE = "ON_SQ1_COMPLETE";
         public const string ON_SQ2_COMPLETE = "ON_SQ2_COMPLETE";
         public const string ON_SQ3_COMPLETE = "ON_sQ3_COMPLETE";
-    }
-
-    public class Combat
-    {
-        public const string ON_ENEMY_KILLED = "ON_ENEMY_KILLED";
-        public const string ON_ALLY_KILLED = "ON_ALLY_KILLED";
     }
 }
