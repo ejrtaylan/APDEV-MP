@@ -10,7 +10,8 @@ public class ChoiceDialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private Button endButton; // End button to stop the conversation
+    [SerializeField] private Button endButton; 
+    [SerializeField] private Button CombatButton;
 
     [Header("Disabled UI")]
     [SerializeField] private GameObject joystickPanel;
@@ -25,7 +26,7 @@ public class ChoiceDialogueManager : MonoBehaviour
 
     private string currentStoryText;
     private List<string> currentChoicesText;
-    private int storySectionCounter; // Add a counter to track story section
+    private int storySectionCounter; 
 
     private static ChoiceDialogueManager instance;
 
@@ -53,6 +54,7 @@ public class ChoiceDialogueManager : MonoBehaviour
         }
 
         endButton.onClick.AddListener(ExitDialogueMode);
+        CombatButton.onClick.AddListener(CombatEnabler);
     }
 
     private void Update()
@@ -77,11 +79,20 @@ public class ChoiceDialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         joystickPanel.SetActive(false);
-        endButton.gameObject.SetActive(false);
+        endButton.gameObject.SetActive(true);
         storySectionCounter = 0; // Reset the counter
         Debug.Log("Enter Dialogue Mode");
 
         ContinueStory();
+    }
+
+    public void CombatEnabler()
+    {
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+        dialogueText.text = "";
+        joystickPanel.SetActive(false); 
+        CombatManager.Instance.BeginCombat();
     }
 
     public void ExitDialogueMode()
