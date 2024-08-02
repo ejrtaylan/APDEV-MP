@@ -13,8 +13,10 @@ public class CombatManager : MonoBehaviour
 
     [Header("Values")]
     [SerializeField] private float moveSpeedMod = 0.5f;
+    [SerializeField] private float tileEstimateDist = 10.0f;
 
     [Header("Setup")]
+    [SerializeField] private List<GameObject> PlayerParty;
     [SerializeField] private ClassAbility movementAbilityRef;
     [SerializeField] private GameObject playerTurnBanner;
     [SerializeField] private GameObject enemyTurnBanner;
@@ -30,6 +32,7 @@ public class CombatManager : MonoBehaviour
     private bool AwaitingActionTarget{get; set;} = false;
     private bool AwaitingMoveTarget{get; set;} = false;
     private ClassAbility processingAction;
+    [SerializeField] private Dictionary<ETeam, List<Combatant>> allCombatants = new Dictionary<ETeam, List<Combatant>>();
     [SerializeField] private Dictionary<ETeam, List<Combatant>> teamCombatants = new Dictionary<ETeam, List<Combatant>>();
     [SerializeField] private List<Combatant> combatantsByReverseInitiative;
     private int currentInitiativeIndex = -1;
@@ -65,8 +68,11 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        currentCombatTeamCount = 0;
+        EmptyCurrentCombatants();
+        SpawnPlayerPartyMembers();
+        PopulateCurrentCombatants();
 
+        currentCombatTeamCount = 0;
         foreach(KeyValuePair<ETeam, List<Combatant>> team in teamCombatants){
             if(team.Value.Count <= 0) teamCombatants.Remove(team.Key);
             else currentCombatTeamCount++;
@@ -74,6 +80,8 @@ public class CombatManager : MonoBehaviour
 
         if(currentCombatTeamCount <= 1){
             Debug.LogWarning("[WARN]: Combat attempted to start with 1 or less teams");
+            DisablePlayerPartyMembers();
+            EmptyCurrentCombatants();
             return;
         }
 
@@ -108,6 +116,8 @@ public class CombatManager : MonoBehaviour
         playerActionSelectBanner.SetActive(false);
         enemyTurnBanner.SetActive(false);
 
+        EmptyCurrentCombatants();
+        DisablePlayerPartyMembers();
         TileManager.Instance.ClearTileMap();
 
         if(!teamCombatants.ContainsKey(ETeam.PLAYER_TEAM))
@@ -214,6 +224,7 @@ public class CombatManager : MonoBehaviour
     public void processTargeting(Combatant combatant){
         // Logic for processing the action depending on if AI or player's choice
         if(!AwaitingActionTarget) return;
+        if(!isInCombat(combatant)) return;
 
         int targetDist = TileManager.Instance.getDistance(combatant.CurrentTile, processingAction.User.CurrentTile);
         if(targetDist <= -1) return;
@@ -262,7 +273,6 @@ public class CombatManager : MonoBehaviour
     private void setProcessingAction(ClassAbility action){
         processingAction = action;
         action.User = this.getCurrentCombatant();
-        // Change the canvas to match the selected action depending on the turn
     }
 
     private bool CanCombatContinue(){
@@ -292,6 +302,19 @@ public class CombatManager : MonoBehaviour
     }
 
     public void AddCombatant(Combatant combatant){
+        if(!allCombatants.ContainsKey(combatant.GetComponent<Combatant>().CombatantTeam)){
+            List<Combatant> teamList = new List<Combatant>{combatant};
+
+            allCombatants.Add(combatant.GetComponent<Combatant>().CombatantTeam, teamList);
+        }
+        else if (!allCombatants[combatant.GetComponent<Combatant>().CombatantTeam].Contains(combatant))
+            allCombatants[combatant.GetComponent<Combatant>().CombatantTeam].Add(combatant);
+
+        if(CombatActive)
+            Debug.LogWarning("[WARN]: Combatant added during combat, combatant will not be included in current combat");
+    }
+
+    public void AddCombatantToCurrentCombat(Combatant combatant){
         if(!teamCombatants.ContainsKey(combatant.GetComponent<Combatant>().CombatantTeam)){
             List<Combatant> teamList = new List<Combatant>{combatant};
 
@@ -304,7 +327,16 @@ public class CombatManager : MonoBehaviour
             Debug.LogWarning("[WARN]: Combatant added during combat, combatant will not be included in current combat");
     }
 
-    public void RemoveCombatant(Combatant combatant){
+    public void RemoveCombatantFromGame(Combatant combatant){
+        if(!allCombatants.ContainsKey(combatant.GetComponent<Combatant>().CombatantTeam)) return;
+        if(allCombatants[combatant.CombatantTeam].Contains(combatant)){
+            allCombatants[combatant.CombatantTeam].Remove(combatant);
+            if(allCombatants[combatant.CombatantTeam].Count <= 0)
+                allCombatants.Remove(combatant.CombatantTeam);
+        }
+    }
+
+    public void RemoveCombatantFromCombat(Combatant combatant){
         if(!teamCombatants.ContainsKey(combatant.GetComponent<Combatant>().CombatantTeam)) return;
         if(teamCombatants[combatant.CombatantTeam].Contains(combatant)){
             teamCombatants[combatant.CombatantTeam].Remove(combatant);
@@ -314,6 +346,8 @@ public class CombatManager : MonoBehaviour
             combatantsByReverseInitiative.Remove(combatant);
             sortInitiativeList();
         }
+
+        RemoveCombatantFromGame(combatant);
     }
 
     public List<Combatant> getTeamCombatants(ETeam team){
@@ -323,5 +357,68 @@ public class CombatManager : MonoBehaviour
 
         Debug.LogWarning("[WARN]: Trying to access non-existent team");
         return null;
+    }
+
+    public void AddAsPlayerAlly(GameObject character){
+        Combatant combatant = character.GetComponent<Combatant>();
+        if(combatant == null) return;
+        RemoveCombatantFromGame(combatant);
+        combatant.CombatantTeam = ETeam.PLAYER_TEAM;
+        AddCombatant(combatant);
+        this.PlayerParty.Add(character);
+        Debug.Log($"Added {character} to Party!");
+        DisablePlayerPartyMembers();
+    }
+
+    public void CyclePlayer(){
+        if(PlayerParty.Count <= 1) return;
+
+        GameObject prevPlayer = PlayerParty[0];
+        prevPlayer.SetActive(false);
+        for(int i = 1; i < PlayerParty.Count; i++){
+            PlayerParty[i - 1] = PlayerParty[i];
+        }
+        PlayerParty[PlayerParty.Count - 1] = prevPlayer;
+        PlayerParty[0].GetComponent<Combatant>().CurrentArea = prevPlayer.GetComponent<Combatant>().CurrentArea;
+        PlayerParty[0].SetActive(true);
+    }
+
+    private void DisablePlayerPartyMembers(){
+        for(int i = 1; i < PlayerParty.Count; i++)
+            PlayerParty[i].SetActive(false);
+    }
+    private void SpawnPlayerPartyMembers(){
+        for(int i = 1; i < PlayerParty.Count; i++){
+            PlayerParty[i].transform.position = PlayerParty[0].transform.position;
+            PlayerParty[i].GetComponent<Combatant>().CurrentArea = PlayerParty[0].GetComponent<Combatant>().CurrentArea;
+            PlayerParty[i].SetActive(true);
+        }
+
+    }
+
+    private void EmptyCurrentCombatants(){
+        foreach(List<Combatant> team in teamCombatants.Values){
+            team.Clear();
+        }
+
+        teamCombatants.Clear();
+    }
+
+    private bool isInCombat(Combatant combatant){
+        return combatant.CurrentArea == PlayerParty[0].GetComponent<Combatant>().CurrentArea;
+    }
+
+    private void PopulateCurrentCombatants(){
+        ESubAreas playerArea = PlayerParty[0].GetComponent<Combatant>().CurrentArea;
+        foreach(List<Combatant> team in allCombatants.Values){
+            foreach(Combatant combatant in team){
+                if(combatant.CurrentArea == playerArea)
+                    AddCombatantToCurrentCombat(combatant);
+            }
+        }
+    }
+
+    public GameObject GetActivePlayer(){
+        return PlayerParty[0];
     }
 }
