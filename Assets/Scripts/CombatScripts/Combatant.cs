@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Combatant : MonoBehaviour, ITappable, IComparable
 {
@@ -10,6 +11,8 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
     [SerializeField] private int maxHealth;
     public List<UnitAction> UnitActions;
     [SerializeField] private bool debugKill;
+
+    [SerializeField] public CombatTile CurrentTile;
 
     private int debugInitiative;
     public int CurrentHealth {get; private set;} = 1;
@@ -26,6 +29,12 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
 
     private void OnDisable(){
         CombatManager.Instance.RemoveCombatant(this);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log(other);
+        if(other.gameObject.transform.parent.gameObject.GetComponent<CombatTile>() != null)
+            this.CurrentTile = other.gameObject.transform.parent.gameObject.GetComponent<CombatTile>();
     }
 
     // Update is called once per frame
@@ -57,6 +66,10 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         this.CurrentHealth -= value;
         if(this.CurrentHealth <= 0) 
             this.Kill();
+    }
+
+    public void FullHeal(){
+        this.CurrentHealth = this.maxHealth;
     }
 
     public void Kill(){

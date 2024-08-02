@@ -18,6 +18,7 @@ public class GestureManager : MonoBehaviour
     private Vector2 _startPoint = Vector2.zero;
     private Vector2 _endpoint = Vector2.zero;
 
+    [SerializeField] private LayerMask raycastMask;
     [SerializeField] private TapProperty _tapProperty;
     [SerializeField] private SwipeProperty _swipeProperty;
     public EventHandler<TapEventArgs> OnTap;
@@ -95,7 +96,7 @@ public class GestureManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenPoint);
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
         {
             hitObject = hit.collider.gameObject;
         }
