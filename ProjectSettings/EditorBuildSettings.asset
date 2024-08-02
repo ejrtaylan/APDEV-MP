@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SquareTemp.unity
-    guid: 20da40eef93f79943a0244af61979b83
+    path: Assets/Scenes/0RealGame.unity
+    guid: 81bf0f8f8234ec0448d07f0900943192
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: 2bac4daa4af86cd4b8049b8af828eda0, type: 2}
