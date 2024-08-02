@@ -2,14 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Combatant : MonoBehaviour, ITappable, IComparable
 {
     public ETeam CombatantTeam; 
     [SerializeField] public ClassStats CombatantClass; 
     [SerializeField] private int maxHealth;
-    public List<UnitAction> UnitActions;
+    public List<ClassAbility> Abilities = new List<ClassAbility>();
     [SerializeField] private bool debugKill;
+
+    [SerializeField] public CombatTile CurrentTile;
 
     private int debugInitiative;
     public int CurrentHealth {get; private set;} = 1;
@@ -22,10 +25,34 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         this.debugInitiative = UnityEngine.Random.Range(0, 10);
         this.maxHealth = 20 + this.CombatantClass.ConMod;
         if(this.maxHealth <= 0) this.maxHealth = 1; 
+
+        if(this.CombatantTeam == ETeam.ENEMY_AI_TEAM){
+            Abilities.Add(this.CombatantClass.Ability1);
+            Abilities.Add(this.CombatantClass.Ability2);
+        }
     }
 
     private void OnDisable(){
         CombatManager.Instance.RemoveCombatant(this);
+    }
+
+    public void UpdateCurrentTile() {
+        GameObject hitObject = null;
+
+        RaycastHit hit;
+        if(Physics.Raycast(this.transform.position, Vector3.down, out hit, Mathf.Infinity, TileManager.Instance.tileMask, QueryTriggerInteraction.Ignore))
+        {
+            hitObject = hit.collider.gameObject;
+        }
+
+        if(hitObject == null) return;
+
+        CombatTile tile = hitObject.GetComponent<CombatTile>();
+        if(tile != null)
+            this.CurrentTile = tile;
+
+        if(this.CurrentTile != null)
+            this.AlignToTile();
     }
 
     // Update is called once per frame
@@ -59,9 +86,17 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
             this.Kill();
     }
 
+    public void FullHeal(){
+        this.CurrentHealth = this.maxHealth;
+    }
+
     public void Kill(){
         this.CurrentHealth = 0;
         this.gameObject.SetActive(false);
+    }
+
+    private void AlignToTile(){
+        this.gameObject.transform.position = this.CurrentTile.gameObject.transform.position;
     }
 
     public void OnTap(TapEventArgs args){
@@ -76,5 +111,6 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         Combatant other = (Combatant) obj;
         return this.Initiative() - other.Initiative();
     }
+
 
 }
