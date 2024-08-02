@@ -7,8 +7,6 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
 
-
-
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
