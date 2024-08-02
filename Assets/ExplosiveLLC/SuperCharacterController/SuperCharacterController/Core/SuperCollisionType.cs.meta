@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 68c1a1d27540a1248b096f8960864448
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 42454
+  packageName: Warrior Pack Bundle 2 FREE
+  packageVersion: 1.2
+  assetPath: Assets/ExplosiveLLC/SuperCharacterController/SuperCharacterController/Core/SuperCollisionType.cs
+  uploadId: 430006
