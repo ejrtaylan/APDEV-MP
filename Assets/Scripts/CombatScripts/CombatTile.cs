@@ -9,6 +9,6 @@ public class CombatTile : MonoBehaviour, ITappable
     public int y;
 
     public void OnTap(TapEventArgs args){
-        CombatManager.Instance.processMovement(this);
+        StartCoroutine(CombatManager.Instance.processMovement(this));
     }
 }

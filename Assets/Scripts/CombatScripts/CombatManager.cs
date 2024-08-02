@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ using UnityEngine.UI;
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance { get; private set; }
+
+    [Header("Values")]
+    [SerializeField] private float moveSpeedMod = 0.5f;
 
     [Header("Setup")]
     [SerializeField] private ClassAbility movementAbilityRef;
@@ -226,25 +230,23 @@ public class CombatManager : MonoBehaviour
         EndTurn();
     }
 
-    public void processMovement(CombatTile tile){
-        if(!AwaitingMoveTarget) return;
+    public IEnumerator<CombatTile> processMovement(CombatTile tile){
+        if(!AwaitingMoveTarget) yield break;
 
         int targetDist = TileManager.Instance.getDistance(tile, processingAction.User.CurrentTile);
-        if(targetDist <= -1) return;
-        if(targetDist < processingAction.minimum_range) return;
-        if(targetDist > processingAction.maximum_range) return;
+        if(targetDist <= -1) yield break;
+        if(targetDist < processingAction.minimum_range) yield break;
+        if(targetDist > processingAction.maximum_range) yield break;
 
         AwaitingActionSelect = false;
         AwaitingMoveTarget = false; 
         playerActionSelectBanner.SetActive(false);
 
-            processingAction.User.transform.position = tile.transform.position;
-        // while(
-        //     ){
-
-        // }
-
-
+        while(processingAction.User.transform.position != tile.transform.position){
+            processingAction.User.transform.position = Vector3.MoveTowards(processingAction.User.transform.position, tile.transform.position, moveSpeedMod * (processingAction.User.CombatantClass.DexMod + 6));
+            Debug.Log($"{processingAction.User}: {processingAction.User.transform.position}");
+            yield return null;
+        }
 
         EndTurn();
     }
@@ -313,11 +315,5 @@ public class CombatManager : MonoBehaviour
 
         Debug.LogWarning("[WARN]: Trying to access non-existent team");
         return null;
-    }
-
-    private void updateCurrentTiles(){
-        foreach(Combatant combatant in combatantsByReverseInitiative){
-            // Raycast and update currentTile
-        }
     }
 }
