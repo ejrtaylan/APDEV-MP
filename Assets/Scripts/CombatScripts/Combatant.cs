@@ -93,6 +93,7 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
     public void Kill(){
         this.CurrentHealth = 0;
         this.gameObject.SetActive(false);
+        CombatManager.Instance.TotalKilled++;
     }
 
     private void AlignToTile(){

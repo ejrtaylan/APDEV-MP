@@ -238,7 +238,14 @@ public class CombatManager : MonoBehaviour
         AwaitingMoveTarget = false; 
         playerActionSelectBanner.SetActive(false);
 
-        processingAction.User.transform.position = tile.transform.position;
+            processingAction.User.transform.position = tile.transform.position
+        // while(
+        //     ){
+
+        // }
+
+
+
         EndTurn();
     }
 
