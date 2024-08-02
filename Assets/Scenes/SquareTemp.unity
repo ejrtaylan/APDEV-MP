@@ -557,8 +557,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 613029725}
   inkJSON: {fileID: 4900000, guid: 5752a7148118c6a4ba70b98135159aa1, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &125953567
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1956,7 +1954,6 @@ GameObject:
   - component: {fileID: 433198385}
   - component: {fileID: 433198384}
   - component: {fileID: 433198386}
-  - component: {fileID: 433198387}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -1993,8 +1990,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1830214070}
   inkJSON: {fileID: 4900000, guid: cd889cf2dace95647b1ae50097207f71, type: 3}
-  targetStorySection: 1
-  targetChoiceIndex: 0
 --- !u!65 &433198385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2037,23 +2032,7 @@ MonoBehaviour:
   - {fileID: 125953564}
   - {fileID: 1833334611}
   - {fileID: 1460804424}
---- !u!114 &433198387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433198382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetStorySection: 1
-  targetChoiceIndex: 0
-  DiceRoller: {fileID: 1791823284}
-  difficultyClass: 5
-  DialoguePanel: {fileID: 807349223}
+  - {fileID: 433198382}
 --- !u!1 &438267887
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,6 +3019,96 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563442567}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &570784744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 570784745}
+  - component: {fileID: 570784748}
+  - component: {fileID: 570784747}
+  - component: {fileID: 570784749}
+  m_Layer: 0
+  m_Name: AdelwynTriggerPhase2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &570784745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570784744}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 11.386, y: 11.386, z: 11.386}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1778708688}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &570784747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570784744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760a91f9802c19e42b5dd2ae6da19e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualCue: {fileID: 1830214070}
+  inkJSON: {fileID: 4900000, guid: eae1b03ecd4fbd649aef3e939947a8b7, type: 3}
+--- !u!65 &570784748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570784744}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &570784749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570784744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7d9d6f2fc981a4fbbcb8c6aa728932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetStorySection: 1
+  targetChoiceIndex: 0
+  DiceRoller: {fileID: 1791823284}
+  difficultyClass: 5
+  DialoguePanel: {fileID: 807349223}
+  keywords:
+  - come with me.
+  successJSON: {fileID: 4900000, guid: 51a2ff2205bce584d95631b44990d443, type: 3}
+  failJSON: {fileID: 4900000, guid: 09444352c7eb295459aa0f89680f487a, type: 3}
 --- !u!1 &577185339
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,8 +4248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1422137161}
   inkJSON: {fileID: 4900000, guid: 7395d6a776eb02041aed9970f213bbd7, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &815911300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5854,7 +5921,7 @@ GameObject:
   - component: {fileID: 1367197249}
   - component: {fileID: 1367197248}
   m_Layer: 0
-  m_Name: TriggerPhase2
+  m_Name: ShopTriggerPhase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5889,8 +5956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 613029725}
   inkJSON: {fileID: 4900000, guid: a53ebbea27ebab24d97e56634bba332b, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &1367197249
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7101,8 +7166,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 1422137161}
   inkJSON: {fileID: 4900000, guid: 09a7de7ff048d29479b3e62b58e3d263, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &1460804427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9716,6 +9779,7 @@ Transform:
   - {fileID: 338978322}
   - {fileID: 1830214071}
   - {fileID: 433198383}
+  - {fileID: 570784745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1778708689
@@ -10152,8 +10216,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 109998485}
   inkJSON: {fileID: 4900000, guid: 3d195c0d33175fa44b94ac519c3e49e2, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &1833334614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10469,8 +10531,9 @@ GameObject:
   - component: {fileID: 1921273556}
   - component: {fileID: 1921273558}
   - component: {fileID: 1921273557}
+  - component: {fileID: 1921273559}
   m_Layer: 0
-  m_Name: TriggerPhase2
+  m_Name: TownGuardTriggerPhase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10505,8 +10568,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 109998485}
   inkJSON: {fileID: 4900000, guid: 24a9b09b6930bc1468f92f329b7c351a, type: 3}
-  targetStorySection: 0
-  targetChoiceIndex: 0
 --- !u!65 &1921273558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10528,6 +10589,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1921273559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921273555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31587bc1b3d42fd479029acd76c728c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choiceDialogueTrigger: {fileID: 1921273557}
+  objectsToEnable:
+  - {fileID: 570784744}
+  objectsToDestroy: []
 --- !u!1 &1940299310
 GameObject:
   m_ObjectHideFlags: 0

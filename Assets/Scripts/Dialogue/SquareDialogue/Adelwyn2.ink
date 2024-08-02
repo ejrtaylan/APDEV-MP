@@ -8,12 +8,6 @@ Thanks for the info, you should probably talk to some of the people they mention
 
 -> END
 
-== AdelwynPhase2 ==
-No, seriously, I'd probably screw things up.
-    + [I insist.]
-    
--> END
-
 
     
 

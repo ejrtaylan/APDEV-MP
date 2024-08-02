@@ -18,7 +18,11 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject DialoguePanel;
 
     [Header("Keywords")]
-    [SerializeField] private string[] keywords; 
+    [SerializeField] private string[] keywords;
+
+    [Header("Success and Failure JSON")]
+    [SerializeField] private TextAsset successJSON;
+    [SerializeField] private TextAsset failJSON;
 
     private bool waitingForRoll = false;
 
@@ -66,8 +70,18 @@ public class DialogueTrigger : MonoBehaviour
         this.waitingForRoll = false;
         this.DiceRoller.SetActive(false);
 
-        Debug.Log("Result: " + param.GetBoolExtra("ROLL_RESULT", false));
+        bool rollResult = param.GetBoolExtra("ROLL_RESULT", false);
+        Debug.Log("Result: " + rollResult);
 
-
+        // Determine which JSON to load based on the roll result
+        TextAsset chosenJSON = rollResult ? successJSON : failJSON;
+        if (chosenJSON != null)
+        {
+            ChoiceDialogueManager dialogueManager = ChoiceDialogueManager.GetInstance();
+            if (dialogueManager != null)
+            {
+                dialogueManager.EnterDialogueMode(chosenJSON);
+            }
+        }
     }
 }
