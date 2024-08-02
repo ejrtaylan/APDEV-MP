@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ClassAbility : ScriptableObject {
 
     public Combatant User;
     public Combatant Target;
+    [SerializeField] public Sprite Ability_Icon;
     [SerializeField] protected EUnitActionTypes Action_Type;
     [SerializeField] private string Ability_Name;
     [SerializeField] private string Ability_Description;
