@@ -1749,6 +1749,9 @@ MonoBehaviour:
   - 2
   - 3
   TextSpeed: 0.3
+  index: 0
+  isTyping: 0
+  isFirstLine: 0
 --- !u!65 &209443015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1800,10 +1803,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CombatantTeam: 1
+  CurrentArea: 1
+  CombatantTeam: 0
   CombatantClass: {fileID: 11400000, guid: f880b24d642d9164bb46b12b6ecc8364, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1001 &214395146
@@ -6075,14 +6079,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586108308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1707352542}
   - {fileID: 634134753}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 952764450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6855,13 +6859,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666060079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1387477002}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 952764450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8816,7 +8820,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 586108312}
+  - {fileID: 666060083}
+  - {fileID: 2056420297}
   m_Father: {fileID: 1618850855}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &952764451
@@ -8831,12 +8838,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0c77fcd09230640a98a433dbc00e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeedMod: 0.5
+  tileEstimateDist: 10
+  PlayerParty:
+  - {fileID: 652812868967016615}
+  - {fileID: 209443012}
   movementAbilityRef: {fileID: 11400000, guid: 1b212aec402cc0a4184de5384aa2285c, type: 2}
   playerTurnBanner: {fileID: 666060079}
   enemyTurnBanner: {fileID: 2056420293}
   playerActionSelectBanner: {fileID: 586108308}
   debugStartCombat: 0
+  debugCyclePlayer: 0
   combatantsByReverseInitiative: []
+  TotalKilled: 0
 --- !u!1 &968211395
 GameObject:
   m_ObjectHideFlags: 0
@@ -9876,6 +9890,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 807349223}
   dialogueText: {fileID: 1814857794}
   endButton: {fileID: 2084472347}
+  CombatButton: {fileID: 0}
   joystickPanel: {fileID: 555798687}
   choices:
   - {fileID: 1448029757}
@@ -16429,6 +16444,9 @@ MonoBehaviour:
   - 2
   - 3
   TextSpeed: 0.3
+  index: 0
+  isTyping: 0
+  isFirstLine: 0
 --- !u!65 &1778708687
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16480,10 +16498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CombatantTeam: 0
+  CurrentArea: 0
+  CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: 4461b9a3e654a25468b1fe88aff7610e, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1 &1778996920
@@ -17240,6 +17259,9 @@ MonoBehaviour:
   - 2
   - 3
   TextSpeed: 0.3
+  index: 0
+  isTyping: 0
+  isFirstLine: 0
 --- !u!65 &1915579856
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17291,10 +17313,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 1
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: 4461b9a3e654a25468b1fe88aff7610e, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1 &1921273555
@@ -18601,6 +18624,9 @@ MonoBehaviour:
   - 2
   - 3
   TextSpeed: 0.3
+  index: 0
+  isTyping: 0
+  isFirstLine: 0
 --- !u!65 &2032753793
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18652,10 +18678,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 0
   CombatantTeam: 1
   CombatantClass: {fileID: 11400000, guid: c4c7837c313dfdf4dba475fd63ee57f2, type: 2}
   maxHealth: 20
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!1001 &2040654162
@@ -18905,13 +18932,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056420293}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1404440255}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 952764450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -20138,10 +20165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d7f2dd7e03a834e8eb8956b43cd28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentArea: 1
   CombatantTeam: 0
   CombatantClass: {fileID: 11400000, guid: 7f56e22a36338fa4f99878c31e1f5c4f, type: 2}
   maxHealth: 0
-  UnitActions: []
+  Abilities: []
   debugKill: 0
   CurrentTile: {fileID: 0}
 --- !u!65 &7662884429025076777
@@ -20214,8 +20242,5 @@ SceneRoots:
   - {fileID: 7535560953189637827}
   - {fileID: 1039282977}
   - {fileID: 555798691}
-  - {fileID: 586108312}
-  - {fileID: 666060083}
-  - {fileID: 2056420297}
   - {fileID: 577964865}
   - {fileID: 807349227}

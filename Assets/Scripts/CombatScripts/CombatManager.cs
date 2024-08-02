@@ -24,6 +24,7 @@ public class CombatManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private bool debugStartCombat = false;
+    [SerializeField] private bool debugCyclePlayer = false;
 
     [Header("CombatInfo")]
     public bool CombatActive {get; private set;} = false;
@@ -59,6 +60,10 @@ public class CombatManager : MonoBehaviour
         if(debugStartCombat){
             debugStartCombat = false;
             this.BeginCombat();
+        }
+        if(debugCyclePlayer){
+            debugCyclePlayer = false;
+            this.CyclePlayer();
         }
     }
 
