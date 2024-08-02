@@ -9,7 +9,7 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
     public ETeam CombatantTeam; 
     [SerializeField] public ClassStats CombatantClass; 
     [SerializeField] private int maxHealth;
-    public List<UnitAction> UnitActions;
+    public List<ClassAbility> Abilities = new List<ClassAbility>();
     [SerializeField] private bool debugKill;
 
     [SerializeField] public CombatTile CurrentTile;
@@ -25,6 +25,11 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         this.debugInitiative = UnityEngine.Random.Range(0, 10);
         this.maxHealth = 20 + this.CombatantClass.ConMod;
         if(this.maxHealth <= 0) this.maxHealth = 1; 
+
+        if(this.CombatantTeam == ETeam.ENEMY_AI_TEAM){
+            Abilities.Add(this.CombatantClass.Ability1);
+            Abilities.Add(this.CombatantClass.Ability2);
+        }
     }
 
     private void OnDisable(){
@@ -41,7 +46,7 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         }
 
         if(hitObject == null) return;
-        
+
         CombatTile tile = hitObject.GetComponent<CombatTile>();
         if(tile != null)
             this.CurrentTile = tile;

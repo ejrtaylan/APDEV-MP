@@ -25,7 +25,7 @@ public class CombatManager : MonoBehaviour
     private bool AwaitingActionSelect{get; set;} = false;
     private bool AwaitingActionTarget{get; set;} = false;
     private bool AwaitingMoveTarget{get; set;} = false;
-    private UnitAction processingAction;
+    private ClassAbility processingAction;
     [SerializeField] private Dictionary<ETeam, List<Combatant>> teamCombatants = new Dictionary<ETeam, List<Combatant>>();
     [SerializeField] private List<Combatant> combatantsByReverseInitiative;
     private int currentInitiativeIndex = -1;
@@ -128,30 +128,33 @@ public class CombatManager : MonoBehaviour
 
     private void PlayAITurn(){
         Debug.Log("AI's Turn!");
-        if(getCurrentCombatant().GetComponent<Combatant>().UnitActions.Count <= 0){
+        if(getCurrentCombatant().GetComponent<Combatant>().Abilities.Count <= 0){
             EndTurn();
             return;
         } 
         
         enemyTurnBanner.SetActive(true);
 
-        // TODO : Code AI in determining what action to take
-        int choice = Random.Range(0, getCurrentCombatant().GetComponent<Combatant>().UnitActions.Count - 1);
-        UnitAction action = getCurrentCombatant().GetComponent<Combatant>().UnitActions[choice];
+        int choice = Random.Range(0, getCurrentCombatant().GetComponent<Combatant>().Abilities.Count - 1);
+        ClassAbility action = getCurrentCombatant().GetComponent<Combatant>().Abilities[choice];
         setProcessingAction(action);
         
-        switch(action.classAbility.ActionType){
-            case EUnitActionTypes.MOVEMENT:
-                AwaitingMoveTarget = true;
-                break;
+        switch(action.ActionType){
             case EUnitActionTypes.ATTACK:
+                int targetChoice = Random.Range(0, getTeamCombatants(ETeam.PLAYER_TEAM).Count - 1);
+                processingAction.Target = getTeamCombatants(ETeam.PLAYER_TEAM)[targetChoice];
+                action.OnUse();
+                break;
             case EUnitActionTypes.HEALING:
-                AwaitingActionTarget = true;
+                int allyChoice = Random.Range(0, getTeamCombatants(ETeam.ENEMY_AI_TEAM).Count - 1);
+                processingAction.Target = getTeamCombatants(ETeam.ENEMY_AI_TEAM)[allyChoice];
+                action.OnUse();
                 break;
             case EUnitActionTypes.AURA_HEALING:
-                // play aura healing
+                processingAction.OnUse();
                 break;
         }
+        Debug.Log($"{getCurrentCombatant()} used {processingAction} on {processingAction.Target}!");
         EndTurn();
     }
 
@@ -185,7 +188,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         
-        setProcessingAction(action);
+        setProcessingAction(action.classAbility);
         playerActionSelectBanner.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = action.classAbility.Name;
         
         if(action.classAbility.ActionType == EUnitActionTypes.MOVEMENT){
@@ -196,7 +199,7 @@ public class CombatManager : MonoBehaviour
             AwaitingMoveTarget = false;
             AwaitingActionTarget = false;
             playerActionSelectBanner.SetActive(false);
-            processingAction.classAbility.OnUse();
+            processingAction.OnUse();
             EndTurn();
         } else {
             AwaitingMoveTarget = false;
@@ -208,46 +211,40 @@ public class CombatManager : MonoBehaviour
         // Logic for processing the action depending on if AI or player's choice
         if(!AwaitingActionTarget) return;
 
-        int targetDist = TileManager.Instance.getDistance(combatant.CurrentTile, processingAction.classAbility.User.CurrentTile);
+        int targetDist = TileManager.Instance.getDistance(combatant.CurrentTile, processingAction.User.CurrentTile);
         if(targetDist <= -1) return;
-        if(targetDist < processingAction.classAbility.minimum_range) return;
-        if(targetDist > processingAction.classAbility.maximum_range) return;
+        if(targetDist < processingAction.minimum_range) return;
+        if(targetDist > processingAction.maximum_range) return;
 
         AwaitingActionSelect = false;
         playerActionSelectBanner.SetActive(false);
 
-        Debug.Log($"Used {processingAction.classAbility.Name} on {combatant}");
-        processingAction.classAbility.Target = combatant;
+        Debug.Log($"Used {processingAction.Name} on {combatant}");
+        processingAction.Target = combatant;
         AwaitingActionTarget = false;
-        processingAction.classAbility.OnUse();
+        processingAction.OnUse();
         EndTurn();
     }
 
     public void processMovement(CombatTile tile){
         if(!AwaitingMoveTarget) return;
-        
-        Debug.Log(tile);
-        Debug.Log(processingAction);
-        Debug.Log(processingAction.classAbility);
-        Debug.Log(processingAction.classAbility.User);
-        Debug.Log(processingAction.classAbility.User.CurrentTile);
 
-        int targetDist = TileManager.Instance.getDistance(tile, processingAction.classAbility.User.CurrentTile);
+        int targetDist = TileManager.Instance.getDistance(tile, processingAction.User.CurrentTile);
         if(targetDist <= -1) return;
-        if(targetDist < processingAction.classAbility.minimum_range) return;
-        if(targetDist > processingAction.classAbility.maximum_range) return;
+        if(targetDist < processingAction.minimum_range) return;
+        if(targetDist > processingAction.maximum_range) return;
 
         AwaitingActionSelect = false;
         AwaitingMoveTarget = false; 
         playerActionSelectBanner.SetActive(false);
 
-        processingAction.classAbility.User.transform.position = tile.transform.position;
+        processingAction.User.transform.position = tile.transform.position;
         EndTurn();
     }
 
-    private void setProcessingAction(UnitAction action){
+    private void setProcessingAction(ClassAbility action){
         processingAction = action;
-        action.classAbility.User = this.getCurrentCombatant();
+        action.User = this.getCurrentCombatant();
         // Change the canvas to match the selected action depending on the turn
     }
 
