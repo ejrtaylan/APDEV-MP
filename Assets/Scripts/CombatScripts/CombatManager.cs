@@ -73,6 +73,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
+        playerActionSelectBanner.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
+
         EmptyCurrentCombatants();
         SpawnPlayerPartyMembers();
         PopulateCurrentCombatants();
