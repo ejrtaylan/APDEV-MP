@@ -14,6 +14,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Difficulty Class")]
     [SerializeField] private int difficultyClass;
 
+    [Header("Modifier")]
+    [SerializeField] private int Modifier;
+
     [Header("Dialogue Panel")]
     [SerializeField] private GameObject DialoguePanel;
 
