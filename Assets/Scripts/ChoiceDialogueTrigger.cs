@@ -12,11 +12,13 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
 
     private bool playerInRange;
     private bool isTapped;
+    private bool hasBeenTapped;
 
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
+        hasBeenTapped = false; 
     }
 
     private void Update()
@@ -28,6 +30,7 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
             {
                 ChoiceDialogueManager.GetInstance().EnterDialogueMode(inkJSON);
                 isTapped = false;
+                hasBeenTapped = true; 
             }
         }
         else
@@ -56,5 +59,11 @@ public class ChoiceDialogueTrigger : MonoBehaviour, ITappable
         {
             playerInRange = false;
         }
+    }
+
+
+    public bool HasBeenTapped()
+    {
+        return hasBeenTapped;
     }
 }

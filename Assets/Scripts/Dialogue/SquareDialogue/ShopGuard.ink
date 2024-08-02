@@ -32,7 +32,7 @@ The mayor visited our store a while back, acting all secretive. If you want to k
 -> END
 
 == GuardPhase3 ==
-Well, if you can pry him for that information anyway. The two are close-knit like a pair of lovers.
+You should head inside, well, if you can pry Marcus for that information anyway. The two are close, so I doubt he'd be willing to sell out his friend without getting something in return.
 -> END
 
 
