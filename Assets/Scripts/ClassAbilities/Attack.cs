@@ -30,6 +30,11 @@ public class Attack : ClassAbility
         }
         if(damage < 0) damage = 0;
 
+        Animator animator = User.GetComponent<Animator>();
+        if (animator != null) animator.SetTrigger("Attack");
+
+        Instantiate(GameObject.Find("Damage"), new Vector3(Target.transform.position.x, Target.transform.position.y + 1.75f, Target.transform.position.z), Quaternion.identity);
+
         Target.Damage(Attack_Type, damage);
     }    
 }
