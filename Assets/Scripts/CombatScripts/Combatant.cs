@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Combatant : MonoBehaviour, ITappable, IComparable
+public class Combatant : MonoBehaviour, IComparable
 {
+    [SerializeField] public ESubAreas CurrentArea;
     public ETeam CombatantTeam; 
     [SerializeField] public ClassStats CombatantClass; 
     [SerializeField] private int maxHealth;
@@ -30,10 +31,6 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
             Abilities.Add(this.CombatantClass.Ability1);
             Abilities.Add(this.CombatantClass.Ability2);
         }
-    }
-
-    private void OnDisable(){
-        CombatManager.Instance.RemoveCombatant(this);
     }
 
     public void UpdateCurrentTile() {
@@ -93,6 +90,7 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
     public void Kill(){
         this.CurrentHealth = 0;
         this.gameObject.SetActive(false);
+        CombatManager.Instance.RemoveCombatantFromCombat(this);
         CombatManager.Instance.TotalKilled++;
     }
 
