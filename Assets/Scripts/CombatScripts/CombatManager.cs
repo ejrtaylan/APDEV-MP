@@ -307,4 +307,10 @@ public class CombatManager : MonoBehaviour
         Debug.LogWarning("[WARN]: Trying to access non-existent team");
         return null;
     }
+
+    private void updateCurrentTiles(){
+        foreach(Combatant combatant in combatantsByReverseInitiative){
+            // Raycast and update currentTile
+        }
+    }
 }
