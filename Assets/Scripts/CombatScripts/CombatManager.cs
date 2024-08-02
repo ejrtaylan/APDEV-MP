@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class CombatManager : MonoBehaviour
     public static CombatManager Instance { get; private set; }
 
     [Header("Setup")]
+    [SerializeField] private ClassAbility movementAbilityRef;
     [SerializeField] private GameObject playerTurnBanner;
     [SerializeField] private GameObject enemyTurnBanner;
     [SerializeField] private GameObject playerActionSelectBanner;
@@ -75,10 +77,14 @@ public class CombatManager : MonoBehaviour
         CombatActive = true;
         AwaitingActionSelect = false;
 
+        TileManager.Instance.generateTileMap();
+
         combatantsByReverseInitiative.Clear();
         foreach(List<Combatant> teamList in teamCombatants.Values){
-            foreach(Combatant combatant in teamList)
+            foreach(Combatant combatant in teamList){
                 combatantsByReverseInitiative.Add(combatant);
+                combatant.FullHeal();
+            }
         }
         sortInitiativeList();
         currentInitiativeIndex = combatantsByReverseInitiative.Count - 1;
@@ -92,6 +98,12 @@ public class CombatManager : MonoBehaviour
 
     private void EndCombat(){
         CombatActive = false;
+        
+        playerTurnBanner.SetActive(false);
+        playerActionSelectBanner.SetActive(false);
+        enemyTurnBanner.SetActive(false);
+
+        TileManager.Instance.ClearTileMap();
 
         if(!teamCombatants.ContainsKey(ETeam.PLAYER_TEAM))
             Debug.LogWarning("[WARN]: TODO: Call the game over screen"); // TODO : Call the game over screen
@@ -103,12 +115,13 @@ public class CombatManager : MonoBehaviour
         GameObject slot2 = playerActionSelectBanner.transform.GetChild(0).GetChild(1).gameObject;
         GameObject slot3 = playerActionSelectBanner.transform.GetChild(0).GetChild(2).gameObject;
 
+        slot1.GetComponent<UnitAction>().classAbility = this.movementAbilityRef;
         slot2.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability1;
         slot3.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability2;
 
         playerActionSelectBanner.SetActive(true);
-
         Debug.Log("Player's Turn!");
+
         AwaitingActionSelect = true;
     }
 
@@ -138,20 +151,7 @@ public class CombatManager : MonoBehaviour
                 // play aura healing
                 break;
         }
-    }
-
-    public void processTargeting(Combatant combatant){
-        // Logic for processing the action depending on if AI or player's choice
-        if(!AwaitingActionTarget) return;
-        playerActionSelectBanner.SetActive(false);
-
-        Debug.Log($"Used {processingAction.classAbility.Name} on {combatant}");
-        AwaitingActionSelect = false;
         EndTurn();
-    }
-
-    private void processMove(){
-
     }
 
     private void EndTurn(){
@@ -184,9 +184,62 @@ public class CombatManager : MonoBehaviour
         
         setProcessingAction(action);
         playerActionSelectBanner.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = action.classAbility.Name;
-        // if action is targeting
-        // AwaitingMoveTarget = true;
-        AwaitingActionTarget = true;
+        
+        if(action.classAbility.ActionType == EUnitActionTypes.MOVEMENT){
+            AwaitingMoveTarget = true;
+            AwaitingActionTarget = false;
+        } else  if (action.classAbility.ActionType == EUnitActionTypes.AURA_HEALING) {
+            AwaitingActionTarget = false;
+            AwaitingMoveTarget = false;
+            AwaitingActionTarget = false;
+            playerActionSelectBanner.SetActive(false);
+            processingAction.classAbility.OnUse();
+            EndTurn();
+        } else {
+            AwaitingMoveTarget = false;
+            AwaitingActionTarget = true;
+        }
+    }
+
+    public void processTargeting(Combatant combatant){
+        // Logic for processing the action depending on if AI or player's choice
+        if(!AwaitingActionTarget) return;
+
+        int targetDist = TileManager.Instance.getDistance(combatant.CurrentTile, processingAction.classAbility.User.CurrentTile);
+        if(targetDist <= -1) return;
+        if(targetDist < processingAction.classAbility.minimum_range) return;
+        if(targetDist > processingAction.classAbility.maximum_range) return;
+
+        AwaitingActionSelect = false;
+        playerActionSelectBanner.SetActive(false);
+
+        Debug.Log($"Used {processingAction.classAbility.Name} on {combatant}");
+        processingAction.classAbility.Target = combatant;
+        AwaitingActionTarget = false;
+        processingAction.classAbility.OnUse();
+        EndTurn();
+    }
+
+    public void processMovement(CombatTile tile){
+        if(!AwaitingMoveTarget) return;
+        
+        Debug.Log(tile);
+        Debug.Log(processingAction);
+        Debug.Log(processingAction.classAbility);
+        Debug.Log(processingAction.classAbility.User);
+        Debug.Log(processingAction.classAbility.User.CurrentTile);
+
+        int targetDist = TileManager.Instance.getDistance(tile, processingAction.classAbility.User.CurrentTile);
+        if(targetDist <= -1) return;
+        if(targetDist < processingAction.classAbility.minimum_range) return;
+        if(targetDist > processingAction.classAbility.maximum_range) return;
+
+        AwaitingActionSelect = false;
+        AwaitingMoveTarget = false; 
+        playerActionSelectBanner.SetActive(false);
+
+        processingAction.classAbility.User.transform.position = tile.transform.position;
+        EndTurn();
     }
 
     private void setProcessingAction(UnitAction action){

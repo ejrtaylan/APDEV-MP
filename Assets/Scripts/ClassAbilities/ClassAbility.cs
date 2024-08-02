@@ -12,8 +12,8 @@ public abstract class ClassAbility : ScriptableObject {
     [SerializeField] private string Ability_Description;
     [SerializeField] protected int effect_lower_bound;
     [SerializeField] protected int effect_upper_bound;
-    [SerializeField] protected int minimum_range;
-    [SerializeField] protected int maximum_range;
+    [SerializeField] public int minimum_range;
+    [SerializeField] public int maximum_range;
 
     public EUnitActionTypes ActionType {
         get {return this.Action_Type;}
