@@ -41,7 +41,6 @@ public class CombatManager : MonoBehaviour
         } 
         
         Instance = this;
-        DontDestroyOnLoad(Instance);
 
         playerTurnBanner.SetActive(false);
         enemyTurnBanner.SetActive(false);
@@ -83,6 +82,7 @@ public class CombatManager : MonoBehaviour
         foreach(List<Combatant> teamList in teamCombatants.Values){
             foreach(Combatant combatant in teamList){
                 combatantsByReverseInitiative.Add(combatant);
+                combatant.UpdateCurrentTile();
                 combatant.FullHeal();
             }
         }
@@ -157,6 +157,8 @@ public class CombatManager : MonoBehaviour
     private void EndTurn(){
         playerTurnBanner.SetActive(false);
         enemyTurnBanner.SetActive(false);
+
+        getCurrentCombatant().UpdateCurrentTile();
 
         if(!CanCombatContinue()){
             EndCombat();

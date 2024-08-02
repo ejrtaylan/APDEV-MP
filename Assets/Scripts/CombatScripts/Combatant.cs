@@ -31,10 +31,23 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         CombatManager.Instance.RemoveCombatant(this);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        Debug.Log(other);
-        if(other.gameObject.transform.parent.gameObject.GetComponent<CombatTile>() != null)
-            this.CurrentTile = other.gameObject.transform.parent.gameObject.GetComponent<CombatTile>();
+    public void UpdateCurrentTile() {
+        GameObject hitObject = null;
+
+        RaycastHit hit;
+        if(Physics.Raycast(this.transform.position, Vector3.down, out hit, Mathf.Infinity, TileManager.Instance.tileMask, QueryTriggerInteraction.Ignore))
+        {
+            hitObject = hit.collider.gameObject;
+        }
+
+        if(hitObject == null) return;
+        
+        CombatTile tile = hitObject.GetComponent<CombatTile>();
+        if(tile != null)
+            this.CurrentTile = tile;
+
+        if(this.CurrentTile != null)
+            this.AlignToTile();
     }
 
     // Update is called once per frame
@@ -77,6 +90,10 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         this.gameObject.SetActive(false);
     }
 
+    private void AlignToTile(){
+        this.gameObject.transform.position = this.CurrentTile.gameObject.transform.position;
+    }
+
     public void OnTap(TapEventArgs args){
         CombatManager.Instance.processTargeting(this);
     }
@@ -89,5 +106,6 @@ public class Combatant : MonoBehaviour, ITappable, IComparable
         Combatant other = (Combatant) obj;
         return this.Initiative() - other.Initiative();
     }
+
 
 }

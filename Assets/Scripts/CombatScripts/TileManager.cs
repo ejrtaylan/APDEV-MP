@@ -8,6 +8,7 @@ public class TileManager : MonoBehaviour
 {
     public static TileManager Instance { get; private set;}
 
+    [SerializeField] public LayerMask tileMask;
     [SerializeField] private List<List<CombatTile>> tileMap = new List<List<CombatTile>>();
 
     // Start is called before the first frame update
