@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   User: {fileID: 0}
   Target: {fileID: 0}
+  Ability_Icon: {fileID: 21300000, guid: 9424acf9f018f884aa1de807028a5809, type: 3}
   Action_Type: 2
   Ability_Name: Battlefield Medicine
   Ability_Description: A Melee Healing skill with base healing of 6 - 10 HP
