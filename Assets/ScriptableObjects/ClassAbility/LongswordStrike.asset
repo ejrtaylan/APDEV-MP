@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   User: {fileID: 0}
   Target: {fileID: 0}
+  Ability_Icon: {fileID: 21300000, guid: ddfeb1bf5783ede4fa30e29735b39ec0, type: 3}
   Action_Type: 1
   Ability_Name: Longsword Strike
   Ability_Description: "A Melee Physical attack with base damage of 6 \u2013 10 DMG"

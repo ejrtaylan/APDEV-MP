@@ -5,33 +5,35 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    float accelerometerUpdateInterval = 1.0f / 60.0f;
-    float lowPassKernelWidthInSeconds = 1.0f;
-    float shakeDetectionThreshold = 0.8f;
+    [SerializeField] GameObject diceRoller;
 
-    float lowPassFilterFactor;
-    Vector3 lowPassValue;
-
-    void Start()
+    private void OnEnable()
     {
-        lowPassFilterFactor = accelerometerUpdateInterval / lowPassKernelWidthInSeconds;
-        shakeDetectionThreshold *= shakeDetectionThreshold;
-        lowPassValue = Input.acceleration;
+        EventBroadcaster.Instance.AddObserver(EventNames.DiceEvents.ON_DICE_RESULT, this.OnEnd);
     }
 
-    void Update()
+    public void Update()
     {
-        Vector3 acceleration = Input.acceleration;
-        lowPassValue = Vector3.Lerp(lowPassValue, acceleration, lowPassFilterFactor);
-        Vector3 deltaAcceleration = acceleration - lowPassValue;
-
-        if (deltaAcceleration.sqrMagnitude >= shakeDetectionThreshold)
+        //Debug.Log("shit");
+        if(Input.touchCount > 0)
         {
-            // Perform your "shaking actions" here. If necessary, add suitable
-            // guards in the if check above to avoid redundant handling during
-            // the same shake (e.g. a minimum refractory period).
-            Debug.Log(true);
+            Parameters param = new Parameters();
+            param.PutExtra("DIFFICULTY_CLASS", 20);
+            EventBroadcaster.Instance.PostEvent(EventNames.DiceEvents.ON_DIFFICULTY_CLASS_CHANGE, param);
+
+            diceRoller.SetActive(true);
         }
-        else Debug.Log(false);
+
+    }
+
+    void OnEnd(Parameters param)
+    {
+        bool yes = param.GetBoolExtra("ROLL_RESULT", false);
+
+        if (yes)
+        {
+            Debug.Log("yes");
+        }
+        else Debug.Log("no");
     }
 }

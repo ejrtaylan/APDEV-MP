@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   User: {fileID: 0}
   Target: {fileID: 0}
+  Ability_Icon: {fileID: 21300000, guid: 3e8b5fa73b8cf6e4dbe738ac3c812e3b, type: 3}
   Action_Type: 1
   Ability_Name: Smite
   Ability_Description: A Melee Magic attack with base damage of 8 - 16 DMG
