@@ -131,13 +131,17 @@ public class CombatManager : MonoBehaviour
 
     private void PlayPlayerTurn(){
         playerTurnBanner.SetActive(true);
-        GameObject slot1 = playerActionSelectBanner.transform.GetChild(0).GetChild(0).gameObject;
-        GameObject slot2 = playerActionSelectBanner.transform.GetChild(0).GetChild(1).gameObject;
-        GameObject slot3 = playerActionSelectBanner.transform.GetChild(0).GetChild(2).gameObject;
+        GameObject slot1 = playerActionSelectBanner.transform.GetChild(1).GetChild(0).gameObject;
+        GameObject slot2 = playerActionSelectBanner.transform.GetChild(1).GetChild(1).gameObject;
+        GameObject slot3 = playerActionSelectBanner.transform.GetChild(1).GetChild(2).gameObject;
 
         slot1.GetComponent<UnitAction>().classAbility = this.movementAbilityRef;
         slot2.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability1;
         slot3.GetComponent<UnitAction>().classAbility = getCurrentCombatant().CombatantClass.Ability2;
+
+        slot1.GetComponent<Image>().sprite = this.movementAbilityRef.Ability_Icon;
+        slot2.GetComponent<Image>().sprite = getCurrentCombatant().CombatantClass.Ability1.Ability_Icon;
+        slot3.GetComponent<Image>().sprite = getCurrentCombatant().CombatantClass.Ability2.Ability_Icon;
 
         playerActionSelectBanner.SetActive(true);
         Debug.Log("Player's Turn!");
@@ -180,6 +184,7 @@ public class CombatManager : MonoBehaviour
     private void EndTurn(){
         playerTurnBanner.SetActive(false);
         enemyTurnBanner.SetActive(false);
+        playerActionSelectBanner.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
 
         getCurrentCombatant().UpdateCurrentTile();
 
@@ -208,7 +213,7 @@ public class CombatManager : MonoBehaviour
         }
         
         setProcessingAction(action.classAbility);
-        playerActionSelectBanner.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = action.classAbility.Name;
+        playerActionSelectBanner.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = action.classAbility.Name;
         
         if(action.classAbility.ActionType == EUnitActionTypes.MOVEMENT){
             AwaitingMoveTarget = true;
